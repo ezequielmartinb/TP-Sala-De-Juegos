@@ -1,0 +1,30 @@
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f8f9fa;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1, h2 {
+    color: #343a40;
+}
+ul {
+    padding-left: 20px;
+}
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}

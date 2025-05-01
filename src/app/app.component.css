@@ -1,0 +1,11 @@
+.nav
+{
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+.selected
+{
+    background-color: aqua;
+    border-radius: 5px;
+}
