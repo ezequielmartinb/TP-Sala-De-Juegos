@@ -1,0 +1,11 @@
+.contenedor-login 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+.formulario-login 
+{
+    padding: 20px;
+    border-radius: 5px;
+}

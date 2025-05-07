@@ -3,6 +3,9 @@
     border-bottom: 1px solid #ccc;
     margin-bottom: 2rem;
     padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .selected
 {

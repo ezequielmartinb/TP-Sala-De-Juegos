@@ -3,8 +3,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>  
 </head>
-<input type="text" [(ngModel)]="username" placeholder="Username">
-<br>
-<input type="text" [(ngModel)]="password" placeholder="Password">
-<br>
-<button (click)="login()">Iniciar sesión</button>
+<div class="contenedor-login">
+    <div class="formulario-login">
+        <input type="text" [(ngModel)]="username" placeholder="Username">
+        <br>
+        <input type="text" [(ngModel)]="password" placeholder="Password">
+        <br>
+        <button (click)="login()">Iniciar sesión</button>
+    </div>
+</div>
