@@ -76,3 +76,22 @@ img
     height: 50px;
     position: absolute;
 }
+.contenedor-login 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+.formulario-login 
+{
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+  

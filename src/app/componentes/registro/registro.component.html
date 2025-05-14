@@ -1,0 +1,22 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>  
+</head>
+<div class="contenedor-login">
+    <div class="formulario-login">
+        <input type="text" placeholder="Username" [(ngModel)]="username" class="register-input" />
+        <br>
+        <input type="password" placeholder="Password" [(ngModel)]="password" class="register-input" />
+        <br>
+        <button (click)="register()" class="register-button">
+            Registro
+        </button>
+    </div>    
+    <div *ngIf="message">
+        <p [style.color]="messageType === 'success' ? 'green' : 'red'">
+          {{ message }}
+        </p>
+    </div>  
+</div>
+<div class="error-msg">{{ errorMessage }}</div>
