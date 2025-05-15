@@ -26,6 +26,7 @@ export class LoginComponent
 
   login()
   {
+    console.log(this.username);
     supabase.auth.signInWithPassword(
     {
       email: this.username,
@@ -33,24 +34,24 @@ export class LoginComponent
     })
     .then(({ data, error }) => 
     {
-      if (error) 
-      {
-        if(error.message == 'Invalid login credentials')
-        {
-          this.errorMessage = 'Credenciales invalidas';
-          console.log(this.errorMessage);
-        }
-        else if(this.errorMessage == 'missing email or phone')
-        {
+      if (error) {
+        console.error('Error al iniciar sesión:', error.message);
+  
+        if (error.message === 'Invalid login credentials') {
+          this.errorMessage = 'Credenciales inválidas';
+        } else if (error.message === 'missing email or phone') {
           this.errorMessage = 'Ingrese username';
-          console.log(this.errorMessage);
+        } else {
+          this.errorMessage = `Error inesperado: ${error.message}`;
         }
-      } 
-      else 
-      {
-        this.router.navigate(['/home']);
+  
+        console.log(this.errorMessage);
+      } else {
+        console.log('Inicio de sesión exitoso:', data);
+        this.router.navigate(['/home'], { queryParams: { username: this.username } });
       }
-    });
+    })   
+  
   }
   quickAcess()
   {

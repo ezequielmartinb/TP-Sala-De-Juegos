@@ -67,7 +67,7 @@ export class RegistroComponent {
     ]);
   
     if (error) 
-      {
+    {
       this.message = 'Hubo un error al registrar el usuario';
       this.messageType = 'error';
       console.error(error.message);
@@ -76,7 +76,7 @@ export class RegistroComponent {
     {
       this.message = 'Usuario registrado correctamente';
       this.messageType = 'success';
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home'], {queryParams: {username: this.username}});
     }  
   } 
 }

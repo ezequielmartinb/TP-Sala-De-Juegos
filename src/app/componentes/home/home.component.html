@@ -3,4 +3,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>  
 </head>
-<h1>Bienvenidos a la Sala de Juegos</h1>
+@if(this.username != null)
+{
+    <h1>Bienvenidos, {{this.username}} a la Sala de Juegos</h1>
+}
+@else 
+{
+    <h1>Bienvenidos a la Sala de Juegos</h1>
+}
