@@ -9,8 +9,8 @@
         <br>
         <input type="password" [(ngModel)]="password" placeholder="Password">
         <br>
-        <button (click)="login()">Iniciar sesión</button>
-        <button (click)="quickAcess()">Acceso rápido</button>
+        <button class="btn btn-success" (click)="login()">Iniciar sesión</button>
+        <button class="btn btn-link" (click)="quickAcess()">Acceso rápido</button>
     </div>
 </div>
 <div class="error-msg">{{ errorMessage }}</div>
