@@ -122,3 +122,50 @@ body {
     display: block;
     margin: 0 auto;
 }
+.juegos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+    place-items: center;
+
+}
+  
+.juegos button {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el texto y el icono */
+    width: 160px; /* Aumenta el tamaño del botón si es necesario */
+    height: 50px;
+    font-size: 1rem;
+    text-align: center;
+    overflow: visible; /* Permite que el texto se muestre completamente */
+    white-space: normal; /* Permite que el texto se divida en varias líneas si es necesario */
+    padding: 8px;
+  }
+  
+.mensaje-error {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 5px;
+  }
+  
+.boton-ahorcado,
+.boton-mayor-menor,
+.boton-mi-juego,
+.boton-preguntados { 
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre el ícono y el texto */
+}
+
+.icono-boton {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    flex-shrink: 0; /* Evita que el icono reduzca el espacio del texto */
+  }
+  

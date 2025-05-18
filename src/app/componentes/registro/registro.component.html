@@ -10,11 +10,6 @@
         <input type="password" placeholder="Password" [(ngModel)]="password" class="register-input" />
         <br>
         <button class="btn btn-success" (click)="register()">Registro</button>
-    </div>    
-    <div *ngIf="message">
-        <p [style.color]="messageType === 'success' ? 'green' : 'red'">
-          {{ message }}
-        </p>
-    </div>  
+    </div>        
 </div>
 <div class="error-msg">{{ errorMessage }}</div>

@@ -1,13 +1,35 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>  
-</head>
-@if(this.username != null)
-{
-    <h1>Bienvenidos, {{this.username}} a la Sala de Juegos</h1>
-}
-@else 
-{
-    <h1>Bienvenidos a la Sala de Juegos</h1>
-}
+<h1>Bienvenidos {{ username ? ', ' + username : '' }} a la Sala de Juegos</h1>
+
+<div class="juegos">
+    <div>
+        <button class="btn btn-outline-primary boton-ahorcado" routerLink="ahorcado" (click)="mostrarMensajeError(1)">
+            <img [src]="iconoAhorcadoUrl" class="icono-boton" alt="Icono Ahorcado">
+            <span>Ahorcado</span>
+          </button>   
+        <p class="mensaje-error" *ngIf="mensajeActivo === 1">Para jugar, primero hay que iniciar sesión.</p>
+      </div>
+
+  <div>
+    <button class="btn btn-outline-primary boton-mayor-menor" routerLink="mayor-menor" (click)="mostrarMensajeError(2)">
+        <img [src]="iconoMayorMenorUrl" class="icono-boton" alt="Icono Mayor Menor">
+        <span>Mayor o menor</span>
+      </button>   
+    <p class="mensaje-error" *ngIf="mensajeActivo === 2">Para jugar, primero hay que iniciar sesión.</p>
+  </div>
+
+  <div>
+    <button class="btn btn-outline-primary boton-preguntados" routerLink="preguntados" (click)="mostrarMensajeError(3)">
+        <img [src]="iconoPreguntadosUrl" class="icono-boton" alt="Icono Preguntados">
+        <span>Preguntados</span>
+      </button>     
+    <p class="mensaje-error" *ngIf="mensajeActivo === 3">Para jugar, primero hay que iniciar sesión.</p>
+  </div>
+
+  <div>
+    <button class="btn btn-outline-primary boton-mi-juego" routerLink="mi-juego" (click)="mostrarMensajeError(4)">
+        <img [src]="iconoMiJuegoUrl" class="icono-boton" alt="Icono Mi Juego">
+        <span>Mi Juego</span>
+      </button>  
+    <p class="mensaje-error" *ngIf="mensajeActivo === 4">Para jugar, primero hay que iniciar sesión.</p>
+  </div>
+</div>
