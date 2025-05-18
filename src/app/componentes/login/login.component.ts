@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { createClient } from '@supabase/supabase-js';
@@ -19,44 +19,62 @@ export class LoginComponent
   password:string = "";
   errorMessage:string=""
 
-  constructor(private router: Router) 
+  constructor(private router: Router, private cd: ChangeDetectorRef) 
   {
   
   }
 
-  login()
-  {
-    console.log(this.username);
-    supabase.auth.signInWithPassword(
+  async login() {
+    if (!this.isValidEmail(this.username)) 
     {
-      email: this.username,
-      password: this.password,
-    })
-    .then(({ data, error }) => 
+      this.errorMessage = 'Ingrese un correo electrónico válido';
+      return;
+    }
+  
+    try 
     {
-      if (error) {
-        console.error('Error al iniciar sesión:', error.message);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: this.username,
+        password: this.password,
+      });
   
-        if (error.message === 'Invalid login credentials') {
-          this.errorMessage = 'Credenciales inválidas';
-        } else if (error.message === 'missing email or phone') {
-          this.errorMessage = 'Ingrese username';
-        } else {
-          this.errorMessage = `Error inesperado: ${error.message}`;
-        }
-  
-        console.log(this.errorMessage);
-      } else {
-        console.log('Inicio de sesión exitoso:', data);
-        this.router.navigate(['/home'], { queryParams: { username: this.username } });
+      if (error) 
+      {
+        this.errorMessage = this.getErrorMessage(error.message);
+        return;
       }
-    })   
   
+      console.log('Inicio de sesión exitoso:', data);
+      this.cd.detectChanges();
+      this.router.navigate(['/home'], { queryParams: { username: this.username } });
+    } 
+    catch (error) 
+    {
+      console.error('Error inesperado al iniciar sesión:', error);
+      this.errorMessage = 'Error inesperado al iniciar sesión';
+    }
+  }
+  
+  private isValidEmail(email: string): boolean 
+  {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  
+  private getErrorMessage(errorMessage: string): string {
+    const errorMessages: Record<string, string> = 
+    {
+      'Invalid login credentials': 'Credenciales inválidas',
+      'missing email or phone': 'Ingrese username',
+    };
+  
+    return errorMessages[errorMessage] || `Error inesperado: ${errorMessage}`;
   }
   quickAcess()
   {
     this.username="ezequielmartinb10@gmail.com";
-    this.password="123456"
+    this.password="123456";
+    this.cd.detectChanges(); 
   }
 
 

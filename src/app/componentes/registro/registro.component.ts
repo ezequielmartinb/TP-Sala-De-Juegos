@@ -8,7 +8,7 @@ const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
 
 @Component({
   selector: 'app-registro',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
@@ -20,7 +20,8 @@ export class RegistroComponent {
   messageType:string;
   errorMessage:string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router) 
+  {
     this.username = '';
     this.password = '';
     this.message = '';
@@ -29,28 +30,25 @@ export class RegistroComponent {
   } 
   
   async register() {
+    if (!this.isValidEmail(this.username)) {
+      this.errorMessage = 'Ingrese un correo electrónico válido';
+      return;
+    }
+  
     try 
     {
-      if (!this.username || !this.password) 
-      {
-        this.errorMessage = 'Email y contraseña son obligatorios';
-        return;
-      }
-  
-      const { error } = await supabase.auth.signUp(
-      {
+      const { error } = await supabase.auth.signUp
+      ({
         email: this.username,
         password: this.password,
       });
   
       if (error) 
       {
-        this.errorMessage = `Error: ${error.message}`;
+        this.errorMessage = this.getErrorMessage(error.message);
         return;
-      }
-  
-      this.errorMessage = 'Usuario registrado correctamente';
-      this.saveUserData(this.username, this.password)      
+      }  
+      this.saveUserData(this.username, this.password);
     } 
     catch (error) 
     {
@@ -58,8 +56,25 @@ export class RegistroComponent {
     }
   }
   
+  private getErrorMessage(errorMessage: string): string 
+  {
+    const errorMessages: Record<string, string> = 
+    {
+      'Password should be at least 6 characters.': 'La contraseña debe tener al menos 6 caracteres',
+      'Signup requires a valid password': 'Ingrese una contraseña válida',
+      'Anonymous sign-ins are disabled': 'Ingrese un usuario y contraseña válidos',
+      'User already registered': 'El usuario que quiere registrar ya existe',
+    };
   
-  
+    return errorMessages[errorMessage] || `Error inesperado: ${errorMessage}`;
+  }  
+
+  private isValidEmail(email: string): boolean 
+  {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+    
   async saveUserData(username:string, password:string) 
   {
     const { error } = await supabase.from('usuarios').insert([
