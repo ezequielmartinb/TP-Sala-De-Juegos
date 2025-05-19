@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { createClient, User } from '@supabase/supabase-js'
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../servicios/auth.service';
 
 const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
 
@@ -20,7 +21,7 @@ export class RegistroComponent {
   messageType:string;
   errorMessage:string;
 
-  constructor(private router: Router) 
+  constructor(private router: Router, private authService: AuthService) 
   {
     this.username = '';
     this.password = '';
@@ -29,8 +30,10 @@ export class RegistroComponent {
     this.errorMessage = '';
   } 
   
-  async register() {
-    if (!this.isValidEmail(this.username)) {
+  async register() 
+  {
+    if (!this.authService.isValidEmail(this.username)) 
+    {
       this.errorMessage = 'Ingrese un correo electrónico válido';
       return;
     }
@@ -69,16 +72,10 @@ export class RegistroComponent {
     return errorMessages[errorMessage] || `Error inesperado: ${errorMessage}`;
   }  
 
-  private isValidEmail(email: string): boolean 
-  {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-    
   async saveUserData(username:string, password:string) 
   {
     const { error } = await supabase.from('usuarios').insert([
-      { username: this.username, password: this.password }
+      { username: username, password: password }
     ]);
   
     if (error) 
@@ -90,8 +87,9 @@ export class RegistroComponent {
     else 
     {
       this.message = 'Usuario registrado correctamente';
+      this.authService.setUsuario(username);
       this.messageType = 'success';
-      this.router.navigate(['/home'], {queryParams: {username: this.username}});
+      this.router.navigate(['/home']);
     }  
   } 
 }

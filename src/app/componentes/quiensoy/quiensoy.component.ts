@@ -10,14 +10,17 @@ const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
   templateUrl: './quiensoy.component.html',
   styleUrl: './quiensoy.component.css'
 })
-export class QuiensoyComponent {
+export class QuiensoyComponent 
+{
   imageUrl: string = '';
 
-  constructor() {
+  constructor() 
+  {
     this.obtenerImagen();
   }
 
-  async obtenerImagen() {
+  async obtenerImagen() 
+  {
     const { data } = await supabase.storage.from('images').getPublicUrl('imagen.jpg');
     this.imageUrl = data.publicUrl;
   }

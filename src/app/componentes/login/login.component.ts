@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { createClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../servicios/auth.service';
 
 
 const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
@@ -19,13 +20,14 @@ export class LoginComponent
   password:string = "";
   errorMessage:string=""
 
-  constructor(private router: Router, private cd: ChangeDetectorRef) 
+  constructor(private router: Router, private cd: ChangeDetectorRef, private authService: AuthService) 
   {
   
   }
 
-  async login() {
-    if (!this.isValidEmail(this.username)) 
+  async login() 
+  {
+    if (!this.authService.isValidEmail(this.username)) 
     {
       this.errorMessage = 'Ingrese un correo electrónico válido';
       return;
@@ -46,36 +48,28 @@ export class LoginComponent
   
       console.log('Inicio de sesión exitoso:', data);
       this.cd.detectChanges();
-      this.router.navigate(['/home'], { queryParams: { username: this.username } });
+      this.authService.setUsuario(this.username);
+      this.router.navigate(['/home']);
     } 
     catch (error) 
     {
-      console.error('Error inesperado al iniciar sesión:', error);
       this.errorMessage = 'Error inesperado al iniciar sesión';
     }
   }
   
-  private isValidEmail(email: string): boolean 
+  private getErrorMessage(errorMessage: string): string 
   {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-  
-  private getErrorMessage(errorMessage: string): string {
     const errorMessages: Record<string, string> = 
     {
       'Invalid login credentials': 'Credenciales inválidas',
       'missing email or phone': 'Ingrese username',
-    };
-  
+    };  
     return errorMessages[errorMessage] || `Error inesperado: ${errorMessage}`;
   }
-  quickAcess()
+  public quickAcess()
   {
     this.username="ezequielmartinb10@gmail.com";
     this.password="123456";
     this.cd.detectChanges(); 
   }
-
-
 }

@@ -1,5 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-.nav {
+.nav 
+{
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -14,7 +14,9 @@ h1
     text-shadow: 2px 2px 5px var(--shadow-color);
     padding: 20px;
 }
-.container {
+
+.container 
+{
     background-color: transparent;
 }
 
@@ -22,7 +24,6 @@ h1, h2, h3
 {
     font-family: 'Press Start 2P', cursive;
 }
-
 
 .btn-primary
 {
@@ -52,6 +53,7 @@ h1, h2, h3
     background-color: var(--primary-color);
     box-shadow: 0px 4px 8px var(--shadow-color);
 }
+
 img 
 {
     max-width: 100%;
@@ -59,28 +61,33 @@ img
     display: block;
     margin: auto;
 }
+
 .image-container 
 {
     text-align: center;
     margin: 20px 0;
 }
+
 .favicon 
 {
     width: 50px;
     height: 50px;
     position: absolute;
 }
+
 .contenedor-login 
 {
     display: flex;
     justify-content: center;
     align-items: center;
 }  
+
 .formulario-login 
 {
     padding: 20px;
     border-radius: 5px;    
 }
+
 .error-msg 
 {
     color: red;
@@ -88,7 +95,9 @@ img
     margin-top: 10px;
     text-align: center;
 }
-body {
+
+body 
+{
     background-color: #050505; 
     background-image: radial-gradient(circle, 
         rgba(150, 0, 100, 0.5) 15%,  
@@ -104,7 +113,6 @@ body {
     text-shadow: 2px 2px 4px rgba(150, 0, 100, 0.6); 
 }
 
-
 .scanlines 
 {
     position: fixed;
@@ -114,15 +122,19 @@ body {
     pointer-events: none;
 
 }
-.btn-success {
+.btn-success 
+{
     display: block;
     margin: 0 auto;
 }
-.btn-link{
+
+.btn-link
+{
     display: block;
     margin: 0 auto;
 }
-.juegos {
+.juegos 
+{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -130,42 +142,44 @@ body {
     align-items: center;
     height: 80vh; 
     place-items: center;
-
 }
   
-.juegos button {
+.juegos button 
+{
     display: flex;
     align-items: center;
-    justify-content: center; /* Centra el texto y el icono */
-    width: 160px; /* Aumenta el tamaño del botón si es necesario */
+    justify-content: center;
+    width: 160px;
     height: 50px;
     font-size: 1rem;
     text-align: center;
-    overflow: visible; /* Permite que el texto se muestre completamente */
-    white-space: normal; /* Permite que el texto se divida en varias líneas si es necesario */
+    overflow: visible; 
+    white-space: normal; 
     padding: 8px;
-  }
+}
   
-.mensaje-error {
+.mensaje-error 
+{
     color: red;
     font-size: 0.9rem;
     text-align: center;
     margin-top: 5px;
-  }
+}
   
 .boton-ahorcado,
 .boton-mayor-menor,
 .boton-mi-juego,
-.boton-preguntados { 
+.boton-preguntados 
+{ 
     display: flex;
     align-items: center;
-    gap: 8px; /* Espaciado entre el ícono y el texto */
+    gap: 8px; 
 }
 
-.icono-boton {
+.icono-boton 
+{
     width: 24px;
     height: 24px;
     margin-right: 8px;
-    flex-shrink: 0; /* Evita que el icono reduzca el espacio del texto */
-  }
-  
+    flex-shrink: 0;
+}  

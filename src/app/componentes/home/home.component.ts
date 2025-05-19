@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { createClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../servicios/auth.service';
+
 
 const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
 
@@ -22,25 +24,25 @@ export class HomeComponent
   iconoMiJuegoUrl: string = '';
 
 
-  constructor(private route: ActivatedRoute) 
+  constructor(private route: ActivatedRoute, private authService: AuthService) 
   {
     this.obtenerIconos();
   }
   
   ngOnInit() 
   {
-    this.route.queryParams.subscribe(params => {
-      this.username = params['username'] || null;
-    });
+    this.username = this.authService.getUsuario();
   }
 
-  mostrarMensajeError(index: number): void {
+  mostrarMensajeError(index: number): void 
+  {
     if (!this.username) {
       this.mensajeActivo = index;
     }
   }
 
-  async obtenerIconos() {
+  async obtenerIconos() 
+  {
     const { data: dataPreguntados } = await supabase.storage.from('images').getPublicUrl('preguntados.ico');
     this.iconoPreguntadosUrl = dataPreguntados.publicUrl;
   
@@ -53,7 +55,4 @@ export class HomeComponent
     const { data: dataMiJuego } = await supabase.storage.from('images').getPublicUrl('mi-juego.ico');
     this.iconoMiJuegoUrl = dataMiJuego.publicUrl;
   }
-  
-
-
 }
