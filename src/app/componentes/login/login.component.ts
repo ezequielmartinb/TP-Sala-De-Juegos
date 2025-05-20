@@ -46,7 +46,6 @@ export class LoginComponent
         return;
       }
   
-      console.log('Inicio de sesión exitoso:', data);
       this.cd.detectChanges();
       this.authService.setUsuario(this.username);
       this.router.navigate(['/home']);
