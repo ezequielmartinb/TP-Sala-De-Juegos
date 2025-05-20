@@ -35,4 +35,11 @@
 {
   background-color: #0056b3;
 }
-
+.contenedor-cargar-palabra 
+{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

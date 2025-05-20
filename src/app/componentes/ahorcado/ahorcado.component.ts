@@ -24,31 +24,34 @@ export class AhorcadoComponent implements AfterViewInit
   errores = 0;
   erroresMaximos = 11;  
   juegoActivo = true;
+  cargandoPalabra:boolean = true;
 
   constructor(private palabrasService: PalabrasSecretasService) {}
 
-  ngOnInit()
-  {
-    this.palabrasService.getPalabrasSecretas().subscribe(
-    {
-      next: (data) =>
-      {
-        console.log(data);
+  ngOnInit() {
+    this.cargandoPalabra = true; 
+    this.palabrasService.getPalabrasSecretas().subscribe({
+      next: (data) => {
         
-        this.palabrasSecretas = data  .filter(palabra => !palabra.includes(" ") && !palabra.includes("-") && !palabra.includes(".") && !palabra.includes("!"))
-        .map(palabra => palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());        if (this.palabrasSecretas.length > 0)
-        {
-          this.iniciarJuego(); 
-        } 
-        else 
-        {
-          console.error("Error: No se recibieron palabras de la API.");
+        this.palabrasSecretas = data
+          .filter(palabra => !palabra.includes(" ") && !palabra.includes("-") && !palabra.includes(".") && !palabra.includes("!"))
+          .map(palabra => palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());
+  
+        if (this.palabrasSecretas.length > 0) {
+          this.iniciarJuego();
+        } else {
+          console.error("Error: No se recibieron palabras válidas.");
         }
+  
+        this.cargandoPalabra = false; 
       },
-      error: (err) => console.error("Error al obtener palabras:", err)
+      error: (err) => {
+        console.error("Error al obtener palabras:", err);
+        this.cargandoPalabra = false;
+      }
     });
   }
-
+  
   ngAfterViewInit() 
   {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
