@@ -4,5 +4,6 @@
   <button *ngIf="!isLoggedIn" class="btn btn-outline-primary" routerLinkActive="selected" routerLink="register">Registro</button>
   <button class="btn btn-outline-primary" routerLinkActive="selected" routerLink="quiensoy">Quién Soy</button>
   <button *ngIf="isLoggedIn" class="btn btn-outline-danger" (click)="logout()">Cerrar Sesión</button>
+  <button *ngIf="isLoggedIn" class="btn btn-outline-primary" routerLinkActive="selected" routerLink="chat">Sala de chat</button>
 </div>
 <router-outlet />

@@ -1,0 +1,15 @@
+<div class="chat-container">
+    <div #messagesContainer class="messages">
+      <div *ngFor="let msj of obtenerMensajesOrdenados()" class="message">
+        <strong>{{msj.time }} {{ msj.user }}:</strong> {{ msj.text }}         
+      </div>
+    </div>  
+    <div class="input-container">
+      <input 
+        [(ngModel)]="mensaje" 
+        (keyup.enter)="enviarMensaje()" 
+        placeholder="Escribe tu mensaje..." 
+      />
+      <button (click)="enviarMensaje()">Enviar</button>
+    </div>
+</div>

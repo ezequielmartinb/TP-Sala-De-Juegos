@@ -1,0 +1,1 @@
+import{Ca as n,Pa as o,Qa as s,Za as a}from"./chunk-VMMMYYSD.js";import"./chunk-FK42CRUA.js";var p=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-preguntados"]],decls:2,vars:0,template:function(e,i){e&1&&(o(0,"p"),a(1,"preguntados works!"),s())},encapsulation:2})};export{p as PreguntadosComponent};
