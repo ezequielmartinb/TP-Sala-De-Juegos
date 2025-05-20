@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { createClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../servicios/auth.service';
@@ -24,7 +24,7 @@ export class HomeComponent
   iconoMiJuegoUrl: string = '';
 
 
-  constructor(private route: ActivatedRoute, private authService: AuthService) 
+  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) 
   {
     this.obtenerIconos();
   }
@@ -36,8 +36,21 @@ export class HomeComponent
 
   mostrarMensajeError(index: number): void 
   {
-    if (!this.username) {
+    if (!this.username) 
+    {
       this.mensajeActivo = index;
+    }
+    else if(index == 1)
+    {
+      this.router.navigate(['/juegos/ahorcado']);
+    }
+    else if(index == 2)
+    {
+      this.router.navigate(['/juegos/mayormenor']);
+    }
+    else if(index == 3)
+    {
+      this.router.navigate(['/juegos/preguntados']);
     }
   }
 

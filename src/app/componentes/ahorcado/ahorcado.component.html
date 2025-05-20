@@ -1,0 +1,19 @@
+<div class="contenedor-ahorcado">
+    <canvas #hangmanCanvas width="200" height="250"></canvas>
+    <h2>{{ palabraOculta }}</h2>
+
+    <div class="teclado">
+        <div *ngFor="let fila of [fila1, fila2, fila3]" class="fila">
+          <button *ngFor="let letraIngresada of fila" 
+                  (click)="mostrarLetraElegida(letraIngresada)" 
+                  [disabled]="letras.includes(letraIngresada)" 
+                  class="teclas">{{ letraIngresada }}
+          </button>
+        </div>
+      </div>      
+    <div class="letras-usadas">
+        <h3>Letras usadas:</h3>
+        <p>{{ letras.join(', ') }}</p>
+    </div>
+    <button (click)="iniciarJuego()" class="reset-btn">Reiniciar Juego</button>
+</div>

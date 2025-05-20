@@ -1,0 +1,1 @@
+import{Ca as n,Pa as t,Qa as m,Za as r}from"./chunk-NBVEKDWB.js";import"./chunk-FK42CRUA.js";var a=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=n({type:o,selectors:[["app-mayormenor"]],decls:2,vars:0,template:function(e,s){e&1&&(t(0,"p"),r(1,"mayormenor works!"),m())},encapsulation:2})};export{a as MayormenorComponent};
