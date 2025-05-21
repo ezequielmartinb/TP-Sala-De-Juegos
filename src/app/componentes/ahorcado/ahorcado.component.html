@@ -1,10 +1,9 @@
 <div class="contenedor-ahorcado">
     <canvas #hangmanCanvas width="200" height="250"></canvas>
-
     <h2>{{ palabraOculta }}</h2>
-
     <p class="contenedor-cargar-palabra" *ngIf="cargandoPalabra">⌛ Eligiendo palabra...</p>
-
+    <p [ngClass]="{'mensaje-ganador': mensajeFinal.includes('Ganaste'), 'mensaje-perdedor': mensajeFinal.includes('Perdiste')}" class="parrafo-resultados" *ngIf="mensajeFinal">
+        {{ mensajeFinal }}</p>      
     <div class="teclado">
         <div *ngFor="let fila of [fila1, fila2, fila3]" class="fila">
             <button *ngFor="let letraIngresada of fila" 
@@ -14,12 +13,10 @@
                 {{ letraIngresada }}
             </button>
         </div>
-    </div>      
-
+    </div>
     <div class="letras-usadas">
         <h3>Letras usadas:</h3>
         <p>{{ letras.join(', ') }}</p>
     </div>
-
     <button (click)="iniciarJuego()" class="reset-btn" [disabled]="cargandoPalabra">Reiniciar Juego</button>
 </div>
