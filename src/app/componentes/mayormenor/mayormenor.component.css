@@ -1,0 +1,49 @@
+.contenedor-juego 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+  
+.cartas 
+{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cartas img 
+{
+    width: 140px; 
+    height: auto;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #007bff; /* Azul intenso */
+    color: white; /* Texto en blanco */
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+  }
+  
+  button:disabled {
+    background-color: #cccccc; /* Color gris cuando está deshabilitado */
+    cursor: not-allowed;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+  }

@@ -1,1 +1,11 @@
-<p>preguntados works!</p>
+<h1>¿A qué país pertenece esta bandera?</h1>
+<div class="contenedor-pregunta" *ngIf="paisSeleccionado">
+    <img [src]="paisSeleccionado.flag" [alt]="paisSeleccionado.name">
+    <p class="timer">Tiempo restante: <strong>{{ tiempoRestante }}s</strong></p>
+    <div *ngFor="let opcion of opciones">
+        <button class="opcion" #boton (click)="verificarRespuesta(opcion, boton)">
+            {{ opcion.name }}
+        </button>
+    </div>
+</div>
+<button (click)="iniciarJuego()">Reiniciar juego</button>
