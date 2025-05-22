@@ -1,15 +1,17 @@
 <div class="contenedor-juego">
     <h2>Mayor o Menor</h2>
 
+    <p *ngIf="mensajeCarga">{{ mensajeCarga }}</p>
+
     <div class="cartas">
         <img *ngIf="cartaVisible" [src]="cartaVisible.image" alt="Carta visible">
         <img [src]="cartaRevelada || 'https://deckofcardsapi.com/static/img/back.png'" alt="Carta tapada">
     </div>
 
     <div class="botones">
-        <button (click)="evaluarEleccion('mayor')" [disabled]="seleccionRealizada">Mayor</button>
-        <button (click)="evaluarEleccion('menor')" [disabled]="seleccionRealizada">Menor</button>
-        <button (click)="iniciarJuego()">Reiniciar</button>
+        <button (click)="evaluarEleccion('mayor')" [disabled]="seleccionRealizada || cargandoCartas">Mayor</button>
+        <button (click)="evaluarEleccion('menor')" [disabled]="seleccionRealizada || cargandoCartas">Menor</button>
+        <button (click)="iniciarJuego()" [disabled]="cargandoCartas">Reiniciar</button>
     </div>          
 
     <p>{{ resultado }}</p>

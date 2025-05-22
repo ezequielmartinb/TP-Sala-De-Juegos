@@ -23,6 +23,7 @@ export class MayormenorComponent
     resultado: string = '';
     seleccionRealizada: boolean = false;
     cargandoCartas: boolean = false;
+    mensajeCarga:string="";
   
     constructor(private cartasService: CartasService) {}
   
@@ -34,7 +35,7 @@ export class MayormenorComponent
     cargarCartas() 
     {
       this.cargandoCartas = true;
-        
+      this.mensajeCarga = "⌛ Barajando cartas...";    
       this.cartasService.obtenerCartas().then(data => 
       {
         this.cartas = data.filter(carta => carta.code);
@@ -49,6 +50,7 @@ export class MayormenorComponent
         }
   
         this.cargandoCartas = false;
+        this.mensajeCarga = ''; 
       }).catch(error => 
       {
         console.error("Error al obtener cartas:", error);
