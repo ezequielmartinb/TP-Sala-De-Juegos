@@ -26,6 +26,8 @@ export class AhorcadoComponent implements AfterViewInit
   juegoActivo = true;
   cargandoPalabra:boolean = true;
   mensajeFinal:string = "";
+  intentos : number = 3;
+  puntuacion : number = 0;
 
   constructor(private palabrasService: PalabrasSecretasService) {}
 
@@ -36,8 +38,8 @@ export class AhorcadoComponent implements AfterViewInit
     {
       next: (data) => 
       {        
-        this.palabrasSecretas = data.filter(palabra => !palabra.includes(" ") && !palabra.includes("-") && !palabra.includes(".") && !palabra.includes("!"))
-        .map(palabra => palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());
+        this.palabrasSecretas = data.filter(palabra => /^[a-zA-Z]+$/.test(palabra.toString())) // Filtra palabras que solo contienen letras
+        .map(palabra => palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase()); // Elimina acentos y convierte a mayúsculas
   
         if (this.palabrasSecretas.length > 0) 
         {
@@ -120,22 +122,53 @@ export class AhorcadoComponent implements AfterViewInit
       this.dibujarHorca();
       this.errores++;
       this.dibujarAhorcado();
+    }  
+    else if (this.errores >= this.erroresMaximos) 
+    {
+      this.intentos--;
+      this.errores = 0;
+      if (this.intentos === 0) 
+      {
+        this.juegoActivo = false;
+        this.mensajeFinal = `Perdiste todos tus intentos! La última palabra era: ${this.palabraIngresada}`;
+      } 
+      else 
+      {
+        this.iniciarJuego(); 
+      }
     }
   }
+  
 
   informarResultadoDelJuego() 
   {
-    if (!this.palabraOculta.includes('_'))
+    if (!this.palabraOculta.includes('_')) 
     {
+      this.puntuacion += this.palabraIngresada.length * 10; // Más puntos por palabras más largas
       this.juegoActivo = false;
-      this.mensajeFinal = `Ganaste! La palabra es: ${this.palabraIngresada}`;
+      this.mensajeFinal = `Ganaste! La palabra es: ${this.palabraIngresada}. Puntuación actual: ${this.puntuacion}`;
     } 
     else if (this.errores >= this.erroresMaximos) 
     {
       this.juegoActivo = false;
-      this.mensajeFinal = `Perdiste! La palabra era: ${this.palabraIngresada}`;
+      this.intentos--;
+      if (this.intentos === 0) 
+      {
+        this.mensajeFinal = `Perdiste todos tus intentos! Puntuación final: ${this.puntuacion}`;
+      }
+      else
+      {
+        this.mensajeFinal = `Perdiste un intento! La palabra era: ${this.palabraIngresada}`;
+      }
     }
-  } 
+     
+  }
+  reiniciarJuego() {
+    this.intentos = 3;
+    this.puntuacion = 0;
+    this.juegoActivo = true;
+    this.iniciarJuego();
+  }  
 
   limpiarAhorcado()
   {

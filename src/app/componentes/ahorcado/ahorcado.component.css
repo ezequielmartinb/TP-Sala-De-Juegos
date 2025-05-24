@@ -35,14 +35,23 @@
 {
   background-color: #0056b3;
 }
-.contenedor-cargar-palabra 
-{
+.contenedor-ahorcado {
+  display: flex;
+  flex-direction: column; /* Mantiene los elementos en orden vertical */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  height: 100vh; /* Ocupa toda la pantalla */
+}
+
+
+.contenedor-cargar-palabra {
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  width: 100%; /* Asegura que ocupe toda la línea */
 }
+
 .mensaje-ganador 
 {
   color: green;
