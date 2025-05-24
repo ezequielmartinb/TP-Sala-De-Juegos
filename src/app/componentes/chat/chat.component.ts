@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../servicios/auth.service';
 import { createClient } from '@supabase/supabase-js';
@@ -14,13 +14,14 @@ const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
   styleUrl: './chat.component.css'
 })
 
-export class ChatComponent implements OnInit
+export class ChatComponent implements OnInit, OnDestroy
 {
   nuevoMensaje: string = "";
   username: string | null;
-  mensajes: any[] = []; // Almacena los mensajes obtenidos de Supabase
+  mensajes: any[] = [];
   mostrarChat: boolean = false;
   iconoChat: string = "";
+  mensajesSubscription:any;
 
   constructor(private authService: AuthService, private cdRef: ChangeDetectorRef) 
   {
@@ -31,8 +32,22 @@ export class ChatComponent implements OnInit
   ngOnInit(): void 
   {
     this.obtenerMensajes();
+    this.mensajesSubscription = supabase
+    .channel('mensajes')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes' }, (payload) => {
+      this.mensajes.push(payload.new);
+      this.cdRef.detectChanges();
+      this.cdRef.markForCheck();
+      this.scrollToTheLastElementByClassName();
+    })
+    .subscribe();   
   }
-
+  ngOnDestroy(): void {
+    if (this.mensajesSubscription) {
+      supabase.removeChannel(this.mensajesSubscription);
+    }
+  }
+  
   async enviarMensaje() 
   {
     if (this.nuevoMensaje.trim() === "") return;

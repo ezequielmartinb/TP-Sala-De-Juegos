@@ -1,4 +1,4 @@
-<div *ngIf="!mostrarChat" class="chatIconContainer" (click)="mostrarChat=true; scrollToTheLastElementByClassName()">
+<div *ngIf="!mostrarChat && username!=null" class="chatIconContainer" (click)="mostrarChat=true; scrollToTheLastElementByClassName()">
   <img [src]="iconoChat" class="chatIcon" alt="chat Icon">
 </div>
 <div class="card text-center contenedor-chat" *ngIf="mostrarChat">
