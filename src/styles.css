@@ -40,14 +40,6 @@ h1, h2, h3
     transform: scale(1.05);
 }
 
-.card 
-{
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    padding: 20px;
-    color: var(--text-color);
-}
-
 .navbar 
 {
     background-color: var(--primary-color);

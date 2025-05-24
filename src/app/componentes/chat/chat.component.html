@@ -1,15 +1,26 @@
-<div class="chat-container">
-    <div #messagesContainer class="messages">
-      <div *ngFor="let msj of obtenerMensajesOrdenados()" class="message">
-        <strong>{{msj.time }} {{ msj.user }}:</strong> {{ msj.text }}         
-      </div>
-    </div>  
-    <div class="input-container">
-      <input 
-        [(ngModel)]="mensaje" 
-        (keyup.enter)="enviarMensaje()" 
-        placeholder="Escribe tu mensaje..." 
-      />
-      <button (click)="enviarMensaje()">Enviar</button>
+<div *ngIf="!mostrarChat" class="chatIconContainer" (click)="mostrarChat=true; scrollToTheLastElementByClassName()">
+  <img [src]="iconoChat" class="chatIcon" alt="chat Icon">
+</div>
+<div class="card text-center contenedor-chat" *ngIf="mostrarChat">
+  <div class="card-header">
+    CHAT
+    <div class="closeIcon" (click)="mostrarChat=false">X</div>
+  </div>
+  <div class="card-body">
+    <div id="mensajes" class="contenedor-mensajes h-100">
+      <p *ngFor="let mensaje of mensajes" class="msj p-2" [ngClass]="username == mensaje.emisor ? 'enviado' : 'recibido'">
+        <small class="mensaje-fecha">{{ mensaje.fecha | date: 'dd/MM/yyyy HH:mm' }} </small>         
+        <strong>{{ mensaje.emisor }}: </strong>  
+        <small>{{mensaje.texto}}</small>
+      </p>
     </div>
+  </div>
+  <form class="card-footer text-muted input-group" (ngSubmit)="enviarMensaje()">    
+      <input type="text" class="form-control" placeholder="Escriba un mensaje..."[(ngModel)]="nuevoMensaje">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">
+          <button>Enviar</button>
+        </span>
+      </div>
+  </form>
 </div>

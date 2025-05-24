@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { createClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../servicios/auth.service';
+import { ChatComponent } from "../chat/chat.component";
 
 
 const supabase = createClient(environment.apiUrl, environment.publicAnonKey)
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
