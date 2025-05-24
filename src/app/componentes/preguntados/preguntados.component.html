@@ -7,5 +7,11 @@
             {{ opcion.name }}
         </button>
     </div>
+    <p><strong>Intentos restantes:</strong> {{ intentosRestantes }}</p>
+    <button *ngIf="respuestaSeleccionada && intentosRestantes > 0" (click)="continuarJuego()">▶️ Continuar</button>
+    <button *ngIf="intentosRestantes === 0" (click)="reiniciarJuego()">🔄 Reiniciar</button>
 </div>
-<button (click)="iniciarJuego()">Reiniciar juego</button>
+<div *ngIf="intentosRestantes === 0" class="resultado-final">
+    <h3>🎯 ¡Juego terminado!</h3>
+    <p><strong>Puntuación final:</strong> {{ puntuacion }}</p>
+</div>

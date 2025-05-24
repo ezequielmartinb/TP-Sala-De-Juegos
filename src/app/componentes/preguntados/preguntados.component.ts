@@ -19,6 +19,8 @@ export class PreguntadosComponent {
   respuestaSeleccionada = false;
   tiempoRestante = 10;
   intervalo!: any;
+  puntuacion: number = 0;
+  intentosRestantes: number = 3;
 
   constructor(private paisesService: PaisesService) 
   {
@@ -57,6 +59,15 @@ export class PreguntadosComponent {
       const paisRandom = this.elegirUnPais();
       opciones.add(paisRandom);
     }
+    
+    setTimeout(() => 
+    {
+      document.querySelectorAll('button.opcion').forEach(btn => 
+      {
+        btn.removeAttribute('disabled');
+        btn.classList.remove('correcto', 'incorrecto');
+      });
+    });
 
     this.opciones = Array.from(opciones).sort(() => Math.random() - 0.5);
     this.respuestaSeleccionada = false;
@@ -87,6 +98,15 @@ export class PreguntadosComponent {
     this.respuestaSeleccionada = true;
     clearInterval(this.intervalo);
 
+    if (opcion.name === this.paisSeleccionado.name) 
+    {
+      this.puntuacion += 5;
+    } 
+    else 
+    {
+      this.intentosRestantes--;
+    }
+
     boton.classList.add(opcion.name === this.paisSeleccionado.name ? 'correcto' : 'incorrecto');
     document.querySelectorAll('button.opcion').forEach(btn => btn.setAttribute('disabled', 'true'));
   }
@@ -97,4 +117,20 @@ export class PreguntadosComponent {
     const primeraOpcion = this.opciones[0];
     this.verificarRespuesta(primeraOpcion, document.querySelector(`button.opcion`)!);
   }
+  reiniciarJuego() 
+  {
+    this.puntuacion = 0;
+    this.intentosRestantes = 3;
+    this.respuestaSeleccionada = false;
+  
+    clearInterval(this.intervalo);
+    this.iniciarJuego();
+  }
+  continuarJuego() 
+  {
+    if (this.intentosRestantes > 0) 
+    {
+      this.iniciarJuego();
+    }
+  }  
 }
