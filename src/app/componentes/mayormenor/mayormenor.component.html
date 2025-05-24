@@ -1,21 +1,21 @@
 <div class="contenedor-juego">
     <h2>Mayor o Menor</h2>
-
     <p *ngIf="mensajeCarga">{{ mensajeCarga }}</p>
-
     <div class="cartas">
         <img *ngIf="cartaVisible" [src]="cartaVisible.image" alt="Carta visible">
         <img [src]="cartaRevelada || 'https://deckofcardsapi.com/static/img/back.png'" alt="Carta tapada">
     </div>
-
     <div class="botones">
         <button (click)="evaluarEleccion('mayor')" [disabled]="seleccionRealizada || cargandoCartas">Mayor</button>
         <button (click)="evaluarEleccion('menor')" [disabled]="seleccionRealizada || cargandoCartas">Menor</button>
-        <button *ngIf="mostrarBotonContinuar" (click)="continuarJuego()">Continuar</button> <!-- Nuevo botón -->
+        <button *ngIf="mostrarBotonContinuar && intentosRestantes > 0" (click)="continuarJuego()">Continuar</button>
+        <button *ngIf="intentosRestantes <= 0" (click)="reiniciarJuego()">🔄 Reiniciar</button>
     </div>          
-
     <p>{{ resultado }}</p>
-    <p><strong>Intentos restantes:</strong> {{ intentosRestantes }}</p>    
+    <p><strong>Intentos restantes:</strong> {{ intentosRestantes }}</p>
+    <div *ngIf="intentosRestantes > 0" class="mensaje-final">
+        <p><strong>Puntuación:</strong> {{ puntos }}</p> 
+    </div>    
     <div *ngIf="intentosRestantes <= 0" class="mensaje-final">
         <h3>🎯 ¡Juego terminado!</h3>
         <p><strong>Puntuación final:</strong> {{ puntos }}</p> 

@@ -115,8 +115,7 @@ export class MayormenorComponent
 
     this.cartaRevelada = this.cartaTapada.image;
     this.mostrarBotonContinuar = true;
-}
-
+  }
 
   continuarJuego() 
   {
@@ -136,6 +135,18 @@ export class MayormenorComponent
     const valores: Record<string, number> = { JACK: 11, QUEEN: 12, KING: 13, ACE: 14 };
     return valores[valor] !== undefined ? valores[valor] : parseInt(valor, 10);
   }
-
+  reiniciarJuego() 
+  {
+    this.intentosRestantes = 3;
+    this.puntos = 0;
+    this.cartas = [];
+    this.mostrarBotonContinuar = false;
+    this.resultado = '';
+    this.cartaRevelada = '';
+    this.seleccionRealizada = false;
+    
+    this.cargarCartas();
+  }
+  
 }
   
