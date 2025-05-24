@@ -16,90 +16,126 @@ interface Carta
 })
 export class MayormenorComponent 
 {
-    cartas: Carta[] = [];
-    cartaVisible!: Carta;
-    cartaTapada!: Carta;
-    cartaRevelada: string = '';
-    resultado: string = '';
-    seleccionRealizada: boolean = false;
-    cargandoCartas: boolean = false;
-    mensajeCarga:string="";
-  
-    constructor(private cartasService: CartasService) {}
-  
-    ngOnInit()
+  cartas: Carta[] = [];
+  cartaVisible!: Carta;
+  cartaTapada!: Carta;
+  cartaRevelada: string = '';
+  resultado: string = '';
+  seleccionRealizada: boolean = false;
+  cargandoCartas: boolean = false;
+  mensajeCarga: string = '';
+  intentosRestantes: number = 3; 
+  puntos: number = 0;
+  mostrarBotonContinuar: boolean = false;
+
+  constructor(private cartasService: CartasService) {}
+
+  ngOnInit() 
+  {
+    this.cargarCartas();
+  }
+
+  cargarCartas() 
+  {
+    this.cargandoCartas = true;
+    this.mensajeCarga = "⌛ Barajando cartas...";
+    
+    this.cartasService.obtenerCartas().then(data => 
     {
-      this.cargarCartas();
-    }
-  
-    cargarCartas() 
-    {
-      this.cargandoCartas = true;
-      this.mensajeCarga = "⌛ Barajando cartas...";    
-      this.cartasService.obtenerCartas().then(data => 
+      this.cartas = data.filter(carta => carta.code);
+
+      if (this.cartas.length > 1) 
       {
-        this.cartas = data.filter(carta => carta.code);
-  
-        if (this.cartas.length > 1) 
-        {
-          this.iniciarJuego();
-        } 
-        else 
-        {
-          console.error("Error: No se recibieron cartas válidas.");
-        }
-  
-        this.cargandoCartas = false;
-        this.mensajeCarga = ''; 
-      }).catch(error => 
-      {
-        console.error("Error al obtener cartas:", error);
-        this.cargandoCartas = false;
-      });
-    }
-  
-    iniciarJuego()
-    {
-      this.resultado = '';
-      this.cartaRevelada = '';
-      this.seleccionRealizada = false;
-  
-      if (!this.cartas || this.cartas.length < 2) 
-      {
-        console.error("Error: No hay suficientes cartas disponibles.");
-        return;
-      }
-  
-      do 
-      {
-        this.cartaVisible = this.cartas[Math.floor(Math.random() * this.cartas.length)];
-        this.cartaTapada = this.cartas[Math.floor(Math.random() * this.cartas.length)];
-      } while (!this.cartaVisible?.value || !this.cartaTapada?.value || this.cartaVisible.value === this.cartaTapada.value);
-    }
-  
-    evaluarEleccion(elección: string)
-    {
-      if (this.seleccionRealizada) return;
-  
-      this.seleccionRealizada = true;
-      const valorVisible = this.obtenerValor(this.cartaVisible.value);
-      const valorTapada = this.obtenerValor(this.cartaTapada.value); 
-      this.resultado = (elección === 'mayor' && valorVisible > valorTapada) || (elección === 'menor' && valorVisible < valorTapada) ? 'Correcto!' : 'Incorrecto, intenta de nuevo.';  
-      this.cartaRevelada = this.cartaTapada.image;
-    }
-  
-    obtenerValor(valor: string): number 
-    {
-      const valores: Record<string, number> = { JACK: 11, QUEEN: 12, KING: 13, ACE: 14 };
-      if (valores[valor] !== undefined) 
-      {
-        return valores[valor];
+        this.iniciarJuego();
       } 
       else 
       {
-        return parseInt(valor, 10);
+        console.error("Error: No se recibieron cartas válidas.");
       }
-      
-    }  
+
+      this.cargandoCartas = false;
+      this.mensajeCarga = ''; 
+    }).catch(error => 
+    {
+      console.error("Error al obtener cartas:", error);
+      this.cargandoCartas = false;
+    });
+  }
+
+  iniciarJuego() 
+  {
+    if (this.intentosRestantes <= 0 || this.cartas.length < 2) 
+    {
+      this.finalizarJuego();
+      return;
+    }
+    console.log(this.cartas);    
+
+    this.resultado = '';
+    this.cartaRevelada = '';
+    this.seleccionRealizada = false;
+    this.mostrarBotonContinuar = false;
+
+    const indexVisible = Math.floor(Math.random() * this.cartas.length);
+    this.cartaVisible = this.cartas[indexVisible];
+    this.cartas.splice(indexVisible, 1);
+
+    const indexTapada = Math.floor(Math.random() * this.cartas.length);
+    this.cartaTapada = this.cartas[indexTapada];
+    this.cartas.splice(indexTapada, 1);
+
+    console.log(this.cartaVisible);
+    console.log(this.cartaTapada);    
+
+  }
+
+  evaluarEleccion(elección: string) 
+  {
+    if (this.seleccionRealizada || this.intentosRestantes <= 0) return;
+
+    this.seleccionRealizada = true;
+
+    const valorVisible = this.obtenerValor(this.cartaVisible.value);
+    const valorTapada = this.obtenerValor(this.cartaTapada.value);
+    
+    if (valorVisible === valorTapada) 
+    {
+      this.resultado = '🤝 ¡Empate! Las cartas tienen el mismo valor.';
+    } 
+    else if ((elección === 'mayor' && valorVisible > valorTapada) || (elección === 'menor' && valorVisible < valorTapada)) 
+    {
+      this.resultado = '✅ ¡Correcto!';
+      this.puntos += 2;
+    } 
+    else 
+    {
+      this.resultado = '❌ Incorrecto, intenta de nuevo.';
+      this.intentosRestantes--;
+    }
+
+    this.cartaRevelada = this.cartaTapada.image;
+    this.mostrarBotonContinuar = true;
+}
+
+
+  continuarJuego() 
+  {
+    this.mostrarBotonContinuar = false;
+    this.iniciarJuego();
+  }
+
+  finalizarJuego() 
+  {
+    console.log(`🎯 ¡Juego terminado! Puntuación final: ${this.puntos}`);
+    this.intentosRestantes = 0;
+    this.mostrarBotonContinuar = false;
+  }
+
+  obtenerValor(valor: string): number 
+  {
+    const valores: Record<string, number> = { JACK: 11, QUEEN: 12, KING: 13, ACE: 14 };
+    return valores[valor] !== undefined ? valores[valor] : parseInt(valor, 10);
+  }
+
 }
   
