@@ -53,6 +53,10 @@ export class HomeComponent
     {
       this.router.navigate(['/juegos/preguntados']);
     }
+    else if(index == 4)
+    {
+      this.router.navigate(['/juegos/blackjack']);
+    }
   }
 
   async obtenerIconos() 
@@ -66,7 +70,7 @@ export class HomeComponent
     const { data: dataAhorcado } = await supabase.storage.from('images').getPublicUrl('ahorcado.ico');
     this.iconoAhorcadoUrl = dataAhorcado.publicUrl;
   
-    const { data: dataMiJuego } = await supabase.storage.from('images').getPublicUrl('mi-juego.ico');
+    const { data: dataMiJuego } = await supabase.storage.from('images').getPublicUrl('blackjack.ico');
     this.iconoMiJuegoUrl = dataMiJuego.publicUrl;
   }
 }

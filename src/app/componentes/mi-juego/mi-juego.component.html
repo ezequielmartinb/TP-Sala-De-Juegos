@@ -1,0 +1,33 @@
+<div class="blackjack-container">
+    <h1>Juego de Blackjack</h1>
+  
+    <!-- Mostrar intentos y puntuación -->
+    <p>Intentos restantes: <strong>{{ intentosRestantes }}</strong></p>
+    <p>Puntaje acumulado: <strong>{{ puntajeTotal }}</strong></p>
+  
+    <div class="cartas-container">
+      <h2>Jugador</h2>
+      <div class="cartas">
+        <img *ngFor="let carta of cartasJugador" [src]="carta.image" alt="Carta" />
+      </div>
+      <p>Puntaje: {{ puntajeJugador }}</p>
+  
+      <button *ngIf="!juegoTerminado && intentosRestantes > 0" (click)="pedirCarta()">Pedir Carta</button>
+      <button *ngIf="!juegoTerminado && intentosRestantes > 0" (click)="plantarJugador()">Plantarse</button>
+    </div>
+  
+    <div class="cartas-container">
+      <h2>Banca</h2>
+      <div class="cartas">
+        <img *ngFor="let carta of cartasBanca" [src]="carta.image" alt="Carta" />
+      </div>
+      <p>Puntaje: {{ puntajeBanca }}</p>
+    </div>
+  
+    <div *ngIf="juegoTerminado">
+        <h2>{{ mensajeResultado }}</h2>
+        <button (click)="iniciarJuego()">
+          {{ intentosRestantes > 0 ? 'Siguiente mano' : 'Reiniciar Juego' }}
+        </button>
+    </div>      
+</div>

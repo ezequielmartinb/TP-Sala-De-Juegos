@@ -14,11 +14,11 @@ const routes: Routes =
   {
     path:'preguntados',
     loadComponent: () => import('../componentes/preguntados/preguntados.component').then(c => c.PreguntadosComponent)
+  },
+  {
+    path:'blackjack',
+    loadComponent: () => import('../componentes/mi-juego/mi-juego.component').then(c => c.MiJuegoComponent)
   }
-  // {
-  //   path:'mijuego',
-  //   loadComponent: () => import('../componentes/mijuego/mijuego.component').then(c => c.mijuegoComponent)
-  // }
 ];
 
 @NgModule({
