@@ -32,7 +32,7 @@ export class HomeComponent
   
   ngOnInit() 
   {
-    this.username = this.authService.getUsuario();
+    this.username = localStorage.getItem('username');
   }
 
   mostrarMensajeError(index: number): void 
