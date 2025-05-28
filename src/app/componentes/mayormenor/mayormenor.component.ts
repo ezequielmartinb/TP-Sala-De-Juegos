@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartasService } from '../../servicios/cartas.service';
 import { CommonModule } from '@angular/common';
+import { EstadisticasService } from '../../servicios/estadisticas.service';
 interface Carta
 {
   code:string;
@@ -28,7 +29,7 @@ export class MayormenorComponent
   puntos: number = 0;
   mostrarBotonContinuar: boolean = false;
 
-  constructor(private cartasService: CartasService) {}
+  constructor(private cartasService: CartasService, private estadisticasService: EstadisticasService) {}
 
   ngOnInit() 
   {
@@ -111,6 +112,10 @@ export class MayormenorComponent
     {
       this.resultado = '❌ Incorrecto, intenta de nuevo.';
       this.intentosRestantes--;
+      if(this.intentosRestantes === 0)
+      {
+        this.estadisticasService.guardarEstadistica(this.puntos, "Mayor-Menor");
+      }
     }
 
     this.cartaRevelada = this.cartaTapada.image;

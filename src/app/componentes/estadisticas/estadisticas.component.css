@@ -1,0 +1,43 @@
+.estadisticas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .estadistica-juego {
+    border: 2px solid var(--primary-color); /* Usa el color principal */
+    padding: 15px;
+    border-radius: 8px;
+    width: 80%;
+    box-shadow: 0px 4px 6px var(--shadow-color); /* Mantiene coherencia con los botones */
+    background-color: transparent; /* Evita fondo blanco */
+
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Press Start 2P', cursive; /* Igual que los títulos */
+  }
+  
+  thead {
+    background-color: #333;
+    color: white;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  h3 {
+    text-align: center;
+  }
+  
+  td[colspan="3"] {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+  }

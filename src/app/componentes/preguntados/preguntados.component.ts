@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PaisesService } from '../../servicios/paises.service';
 import { CommonModule } from '@angular/common';
+import { EstadisticasService } from '../../servicios/estadisticas.service';
 interface Pais
 {
   name:string,
@@ -22,7 +23,7 @@ export class PreguntadosComponent {
   puntuacion: number = 0;
   intentosRestantes: number = 3;
 
-  constructor(private paisesService: PaisesService) 
+  constructor(private paisesService: PaisesService, private estadisticasService: EstadisticasService) 
   {
     this.paisSeleccionado = this.elegirUnPais();
   }
@@ -105,6 +106,10 @@ export class PreguntadosComponent {
     else 
     {
       this.intentosRestantes--;
+      if(this.intentosRestantes === 0)
+      {
+        this.estadisticasService.guardarEstadistica(this.puntuacion, "Preguntados");
+      }
     }
 
     boton.classList.add(opcion.name === this.paisSeleccionado.name ? 'correcto' : 'incorrecto');

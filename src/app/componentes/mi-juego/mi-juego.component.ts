@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartasService } from '../../servicios/cartas.service';
 import { CommonModule } from '@angular/common';
+import { EstadisticasService } from '../../servicios/estadisticas.service';
 interface Carta
 {
   code:string;
@@ -23,21 +24,22 @@ export class MiJuegoComponent
   puntajeBanca = 0;
   juegoTerminado = false;
   mensajeResultado = '';
-  intentosRestantes = 5;
+  intentosRestantes = 3;
   puntajeTotal = 0;
 
-  constructor(private cartasService: CartasService) {}
+  constructor(private cartasService: CartasService, private estadisticasService: EstadisticasService) {}
 
   async ngOnInit() 
   {
     await this.iniciarJuego();
   }
 
-  async iniciarJuego() {
+  async iniciarJuego() 
+  {
     if (this.intentosRestantes <= 0) 
     {
-      this.intentosRestantes = 5;
-      this.puntajeTotal = 0;
+      this.intentosRestantes = 3;
+      this.puntajeTotal = 0;      
     }
 
     this.juegoTerminado = false;
@@ -93,7 +95,7 @@ export class MiJuegoComponent
     {
       this.juegoTerminado = true;
       this.mensajeResultado = '¡Te pasaste de 21! La banca gana.';
-      this.intentosRestantes--;
+      this.intentosRestantes--;      
     }
   }
 
@@ -135,6 +137,10 @@ export class MiJuegoComponent
     {
       this.mensajeResultado = '¡La banca gana!';
       this.intentosRestantes--;
+      if(this.intentosRestantes === 0)
+      {
+        this.estadisticasService.guardarEstadistica(this.puntajeTotal, "Blackjack");
+      }
     }   
   }
 }

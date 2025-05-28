@@ -30,9 +30,17 @@ export const routes: Routes =
         loadComponent: () => import('./componentes/chat/chat.component').then(c=> c.ChatComponent)     
     },
     {
+        path:'estadisticas',
+        loadComponent : () => import('./componentes/estadisticas/estadisticas.component').then(e => e.EstadisticasComponent)      
+    },
+    {
+        path:'encuesta',
+        loadComponent : () => import('./componentes/encuesta/encuesta.component').then(e => e.EncuestaComponent)      
+    },
+    {
         path:'juegos',
         loadChildren : () => import('./juegos/juegos.module').then(j => j.JuegosModule)      
-    },
+    },    
     {
         path:'**',
         component:ErrorComponent

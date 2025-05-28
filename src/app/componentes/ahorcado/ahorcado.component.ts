@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { PalabrasSecretasService } from '../../servicios/palabras-secretas.service';
+import { EstadisticasService } from '../../servicios/estadisticas.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -29,7 +30,7 @@ export class AhorcadoComponent implements AfterViewInit
   intentos : number = 3;
   puntuacion : number = 0;
 
-  constructor(private palabrasService: PalabrasSecretasService) {}
+  constructor(private palabrasService: PalabrasSecretasService, private estadisticasService: EstadisticasService) {}
 
   ngOnInit() 
   {
@@ -155,6 +156,7 @@ export class AhorcadoComponent implements AfterViewInit
       if (this.intentos === 0) 
       {
         this.mensajeFinal = `Perdiste todos tus intentos! Puntuación final: ${this.puntuacion}`;
+        this.estadisticasService.guardarEstadistica( this.puntuacion, 'Ahorcado');
       }
       else
       {
@@ -163,7 +165,8 @@ export class AhorcadoComponent implements AfterViewInit
     }
      
   }
-  reiniciarJuego() {
+  reiniciarJuego() 
+  {
     this.intentos = 3;
     this.puntuacion = 0;
     this.juegoActivo = true;
@@ -227,4 +230,6 @@ export class AhorcadoComponent implements AfterViewInit
     this.ctx.lineWidth = 3;
     this.ctx.stroke();
   }
+  
+   
 }

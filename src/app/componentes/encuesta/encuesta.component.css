@@ -1,0 +1,78 @@
+body, form, label, input, textarea, button, .alert-success {
+    color: black;
+}
+
+/* Contenedor de la encuesta */
+.encuesta-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Titular */
+h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* Inputs y textarea */
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #007bff;
+    background-color: #f9f9f9;
+}
+
+/* Grupos de opciones */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Botón con mejor efecto */
+button {
+    background: linear-gradient(90deg, #007bff, #004494);
+    color: white;
+    padding: 12px 18px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #0056b3, #003377);
+    transform: scale(1.02);
+}
+
+/* Mensajes de éxito */
+.alert-success {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: #28a745;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}

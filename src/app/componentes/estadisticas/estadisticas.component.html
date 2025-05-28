@@ -1,0 +1,104 @@
+<div class="estadisticas-container">
+    <h2>📊 Estadísticas de Juegos</h2>
+  
+    <!-- Mensaje de carga -->
+    <div *ngIf="cargandoEstadisticas" class="loading">
+      ⏳ Cargando estadísticas...
+    </div>
+  
+    <!-- Ahorcado -->
+    <div *ngIf="!cargandoEstadisticas" class="estadistica-juego">
+      <h3>Ahorcado</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="estadisticasAhorcado.length === 0">
+            <td colspan="3">No hay estadísticas disponibles para Ahorcado.</td>
+          </tr>
+          <tr *ngFor="let estadistica of estadisticasAhorcado">
+            <td>{{ estadistica.nombre_usuario }}</td>
+            <td>{{ estadistica.fecha }}</td>
+            <td>{{ estadistica.puntuacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Mayor-Menor -->
+    <div *ngIf="!cargandoEstadisticas" class="estadistica-juego">
+      <h3>Mayor-Menor</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="estadisticasMayorMenor.length === 0">
+            <td colspan="3">No hay estadísticas disponibles para Mayor-Menor.</td>
+          </tr>
+          <tr *ngFor="let estadistica of estadisticasMayorMenor">
+            <td>{{ estadistica.nombre_usuario }}</td>
+            <td>{{ estadistica.fecha }}</td>
+            <td>{{ estadistica.puntuacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Preguntados -->
+    <div *ngIf="!cargandoEstadisticas" class="estadistica-juego">
+      <h3>Preguntados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="estadisticasPreguntados.length === 0">
+            <td colspan="3">No hay estadísticas disponibles para Preguntados.</td>
+          </tr>
+          <tr *ngFor="let estadistica of estadisticasPreguntados">
+            <td>{{ estadistica.nombre_usuario }}</td>
+            <td>{{ estadistica.fecha }}</td>
+            <td>{{ estadistica.puntuacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Blackjack -->
+    <div *ngIf="!cargandoEstadisticas" class="estadistica-juego">
+      <h3>🎰 Blackjack</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="estadisticasBlackjack.length === 0">
+            <td colspan="3">No hay estadísticas disponibles para Blackjack.</td>
+          </tr>
+          <tr *ngFor="let estadistica of estadisticasBlackjack">
+            <td>{{ estadistica.nombre_usuario }}</td>
+            <td>{{ estadistica.fecha }}</td>
+            <td>{{ estadistica.puntuacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
