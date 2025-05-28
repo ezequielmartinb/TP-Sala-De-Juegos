@@ -67,7 +67,6 @@ export class ChatComponent implements OnInit, OnDestroy
       return;
     }
 
-    this.mensajes.push(mensaje);
     this.nuevoMensaje = "";
     setTimeout(() => this.scrollToTheLastElementByClassName(), 30);
   }
