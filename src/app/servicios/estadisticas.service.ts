@@ -66,7 +66,7 @@ export class EstadisticasService
       .from("estadisticas")
       .select("*")
       .eq("juego", juego)
-      .order("fecha", { ascending: false });
+      .order("puntuacion", { ascending: false });
   
     if (error) 
     {
@@ -75,6 +75,4 @@ export class EstadisticasService
   
     return data as EstadisticaJuego[] || [];
   }
-  
-
 }

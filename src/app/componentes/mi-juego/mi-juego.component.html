@@ -26,6 +26,7 @@
   
     <div *ngIf="juegoTerminado">
         <h2>{{ mensajeResultado }}</h2>
+        <h2 *ngIf="intentosRestantes == 0">🎯¡Juego terminado! Puntaje final: {{ puntajeTotal }}</h2>
         <button (click)="iniciarJuego()">
           {{ intentosRestantes > 0 ? 'Siguiente mano' : 'Reiniciar Juego' }}
         </button>
