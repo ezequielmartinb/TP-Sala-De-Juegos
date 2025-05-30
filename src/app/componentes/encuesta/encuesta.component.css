@@ -1,8 +1,11 @@
-body, form, label, input, textarea, button, .alert-success {
-    color: black;
-}
-
-/* Contenedor de la encuesta */
+body {
+    color: black !important;
+  }
+  
+  label, input, textarea{
+    color: black !important;
+  }
+  
 .encuesta-container {
     max-width: 700px;
     margin: auto;
@@ -12,14 +15,12 @@ body, form, label, input, textarea, button, .alert-success {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Titular */
 h1 {
     text-align: center;
     font-size: 26px;
     font-weight: bold;
 }
 
-/* Inputs y textarea */
 input[type="text"],
 input[type="number"],
 textarea {
@@ -38,16 +39,15 @@ textarea:focus {
     background-color: #f9f9f9;
 }
 
-/* Grupos de opciones */
-.radio-group,
+
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
 }
 
-/* Botón con mejor efecto */
-button {
+button 
+{
     background: linear-gradient(90deg, #007bff, #004494);
     color: white;
     padding: 12px 18px;
@@ -60,13 +60,14 @@ button {
     transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
-button:hover {
+button:hover 
+{
     background: linear-gradient(90deg, #0056b3, #003377);
     transform: scale(1.02);
 }
 
-/* Mensajes de éxito */
-.alert-success {
+.alert-success 
+{
     font-size: 20px;
     font-weight: bold;
     color: #fff;
@@ -74,5 +75,19 @@ button:hover {
     padding: 12px;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 10px rgba(238, 3, 3, 0.2);
 }
+.small-error 
+{
+    color: red;
+    font-size: 0.85rem;
+  }
+  
+  .small-info {
+    color: gray;
+    font-size: 0.85rem;
+  }
+  small {
+    color: red;
+    font-size: 0.85rem;
+  }

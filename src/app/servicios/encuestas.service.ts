@@ -13,14 +13,52 @@ export class EncuestasService
 
   async insertarEncuesta(datos: any) 
   {
-  const { data, error } = await this.supabase.from('encuestas').insert([datos]).select(); // 🔹 Agrega .select() para obtener la respuesta
+    const username = localStorage.getItem('username');
   
-  if (error) 
-  {
-    console.error('❌ Error en Supabase:', error.message);
-    return null;
+    if (!username) 
+    {
+      console.error('❌ No se encontró username en el local storage.');
+      return null;
+    }
+  
+    const usuarioYaCargoEncuesta = await this.verificarEncuestaPorUsuario(username);
+  
+    if (usuarioYaCargoEncuesta) 
+    {
+      console.error('❌ Usuario ya registrado, no se puede insertar.');
+      return null;
+    }
+  
+    datos.username = username;
+  
+    const { data, error } = await this.supabase.from('encuestas').insert([datos]).select();
+  
+    if (error) 
+    {
+      console.error('❌ Error en Supabase:', error.message);
+      return null;
+    }
+  
+    return data;
   }
-  return data; // Retorna los datos insertados
-}
+  
+  
+  async verificarEncuestaPorUsuario(username: string)
+  {
+    const { data, error } = await this.supabase
+      .from('encuestas')
+      .select('username')
+      .eq('username', username);
+  
+    if (error) 
+    {
+      console.error('❌ Error al consultar Supabase:', error.message);
+      return false; 
+    }
+  
+    return data.length > 0;
+  }
+  
+  
 
 }

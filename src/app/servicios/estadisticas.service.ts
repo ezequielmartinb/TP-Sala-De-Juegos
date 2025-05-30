@@ -39,7 +39,7 @@ export class EstadisticasService
     const { data, error } = await this.supabase
       .from('estadisticas')
       .insert([{ nombre_usuario: nombreUsuario, puntuacion, juego, fecha: fechaValida }])
-      .select(); // Agrega .select() para ver el resultado después de la inserción
+      .select();
   
     if (error) 
     {
@@ -66,7 +66,8 @@ export class EstadisticasService
       .from("estadisticas")
       .select("*")
       .eq("juego", juego)
-      .order("puntuacion", { ascending: false });
+      .order("puntuacion", { ascending: false })
+      .limit(3);
   
     if (error) 
     {

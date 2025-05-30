@@ -42,45 +42,50 @@
         <small *ngIf="Telefono?.errors?.['required']">⚠ Este campo es obligatorio.</small>
         <small *ngIf="Telefono?.errors?.['pattern']">Solo se permiten números.</small>
         <small *ngIf="Telefono?.errors?.['maxlength']">Máximo 10 caracteres.</small>
+        <small *ngIf="Telefono?.errors?.['minlength']">Minimo 10 caracteres.</small>
       </div>
     </div>
     <div>
-        <label>1 - ¿Cuál juego te ha divertido más?</label><br>  
+        <label>1 - ¿Cuál juego te ha divertido más?</label><br><br>  
         <div class="radio-group">
+          <label for="ahorcado">Ahorcado
             <input type="radio" id="ahorcado" formControlName="juegoFavorito" value="Ahorcado" />
-            <label for="ahorcado">Ahorcado</label><br>        
+          </label>
+          <label for="mayorMenor">Mayor-Menor
             <input type="radio" id="mayorMenor" formControlName="juegoFavorito" value="Mayor-Menor" />
-            <label for="mayorMenor">Mayor-Menor</label><br>        
+          </label>
+          <label for="preguntados">Preguntados
             <input type="radio" id="preguntados" formControlName="juegoFavorito" value="Preguntados" />
-            <label for="preguntados">Preguntados</label><br>        
+          </label>
+          <label for="blackjack">Blackjack  
             <input type="radio" id="blackjack" formControlName="juegoFavorito" value="Blackjack" />
-            <label for="blackjack">Blackjack</label><br>      
+          </label><br>      
         </div>      
         <div *ngIf="formularioEncuesta.get('juegoFavorito')?.invalid">
-          <small style="color: red;">Debes seleccionar una opción.</small>
+          <small>Debes seleccionar una opción.</small>
         </div><br>
     </div>  
     <div>
-        <label>2 - ¿Qué características agregarías para hacer los juegos más entretenidos o desafiantes?</label><br>
+        <label>2 - ¿Qué características agregarías para hacer los juegos más entretenidos o desafiantes?</label><br><br>
         <div class="checkbox-group">
-
             <div class="checkbox-item">
+              <label for="niveles">Más niveles de dificultad  
                 <input type="checkbox" id="niveles" (change)="agregarOEliminarCaracteristica('Más niveles de dificultad', $event)" />
-                <label for="niveles">Más niveles de dificultad</label>
-              </div>
-          
-              <div class="checkbox-item">
+              </label>
+            </div>          
+            <div class="checkbox-item">
+              <label for="modos">Nuevos modos de juego
                 <input type="checkbox" id="modos" (change)="agregarOEliminarCaracteristica('Nuevos modos de juego', $event)" />
-                <label for="modos">Nuevos modos de juego</label>
-              </div>
-          
-              <div class="checkbox-item">
+              </label>
+            </div>          
+            <div class="checkbox-item">
+              <label for="integracion">Integración online con amigos  
                 <input type="checkbox" id="integracion" (change)="agregarOEliminarCaracteristica('Integración con amigos', $event)" />
-                <label for="integracion">Integración online con amigos</label><br><br>
+              </label><br><br>
             </div>          
         </div>
         <div *ngIf="Caracteristicas?.invalid">
-            <small style="color: red;">Debes seleccionar al menos una opción.</small> <br>
+            <small>Debes seleccionar al menos una opción.</small> <br>
         </div>
     </div>
     <div>
@@ -97,9 +102,10 @@
         <small *ngIf="Comentario?.errors?.['required']">⚠ Este campo es obligatorio.</small>
         <small *ngIf="Comentario?.errors?.['maxlength']">⚠ El comentario no puede superar los 180 caracteres.</small>
       </div>
-    </div>
-    
-      
+    </div>  
+    <div *ngIf="mostrarError" class="alert alert-danger text-center">
+      ⚠️ Ya has enviado una encuesta anteriormente.
+    </div>    
     <button type="submit" [disabled]="formularioEncuesta.invalid">Enviar</button>
   </form>
 </form>

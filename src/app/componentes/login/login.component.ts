@@ -71,4 +71,10 @@ export class LoginComponent
     this.password="123456";
     this.cd.detectChanges(); 
   }
+  public quickAcess2()
+  {
+    this.username="ezequiel@gmail.com";
+    this.password="123456";
+    this.cd.detectChanges(); 
+  }
 }

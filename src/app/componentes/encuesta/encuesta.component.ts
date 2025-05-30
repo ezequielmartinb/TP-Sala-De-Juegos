@@ -14,6 +14,7 @@ export class EncuestaComponent {
   mensajeGracias: boolean = false;
   mostrarFormulario: boolean = true;
   contadorCaracteres: number = 0;
+  mostrarError: boolean = false;
 
   constructor(private encuestaService: EncuestasService)
   {
@@ -27,7 +28,7 @@ export class EncuestaComponent {
         nombre: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'), Validators.required]),
         apellido: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'), Validators.required]),
         edad: new FormControl("", [Validators.required, Validators.min(18), Validators.max(99)]),
-        telefono: new FormControl("", [Validators.required, Validators.pattern(/^\d+$/), Validators.maxLength(10)]),
+        telefono: new FormControl("", [Validators.required, Validators.pattern(/^\d+$/), Validators.maxLength(10), Validators.minLength(10)]),
         juegoFavorito: new FormControl("", [Validators.required]),
         caracteristicas: new FormArray([], [Validators.required]),
         comentario: new FormControl('', [Validators.required, Validators.maxLength(180)])
@@ -79,48 +80,55 @@ export class EncuestaComponent {
   }  
   async enviarFormulario() 
   {
-    if (this.formularioEncuesta.invalid) 
-    {
+    const username = localStorage.getItem('username');
+  
+    if (!username) {
+      console.error('❌ No se encontró username en el local storage.');
+      return;
+    }
+  
+    if (this.formularioEncuesta.invalid) {
       this.formularioEncuesta.markAllAsTouched();
       return;
     }
-
-    const datos = {
-      nombre: this.formularioEncuesta.value.nombre,
-      apellido: this.formularioEncuesta.value.apellido,
-      edad: this.formularioEncuesta.value.edad,
-      telefono: this.formularioEncuesta.value.telefono,
-      juego_favorito: this.formularioEncuesta.value.juegoFavorito,
-      caracteristicas: this.formularioEncuesta.value.caracteristicas,
-      comentario: this.formularioEncuesta.value.comentario
-    };
-
+  
     try 
     {
+      const usuarioYaCargoEncuesta = await this.encuestaService.verificarEncuestaPorUsuario(username);
+  
+      if (usuarioYaCargoEncuesta) {
+        console.error('⚠️ Ya has enviado una encuesta anteriormente.');
+        this.mostrarError = true;
+        return;
+      }
+  
+      const datos = {
+        nombre: this.formularioEncuesta.value.nombre,
+        apellido: this.formularioEncuesta.value.apellido,
+        edad: this.formularioEncuesta.value.edad,
+        telefono: this.formularioEncuesta.value.telefono,
+        juego_favorito: this.formularioEncuesta.value.juegoFavorito,
+        caracteristicas: this.formularioEncuesta.value.caracteristicas,
+        comentario: this.formularioEncuesta.value.comentario,
+        username: username
+      };
+  
       const respuesta = await this.encuestaService.insertarEncuesta(datos);
-      console.log(respuesta);      
+      console.log(respuesta);
+  
       if (respuesta) 
       {
         this.mostrarFormulario = false;
-        this.mensajeGracias = true; // 🔹 Activa el mensaje
+        this.mensajeGracias = true;
       } 
       else 
       {
         console.error('❌ Hubo un problema al enviar la encuesta.');
       }
   
-    } 
-   
-    catch (error) 
-    {
-      if (error instanceof Error) 
-      {
-        console.error('Error al enviar la encuesta:', error.message);
-      }
-      else 
-      {
-        console.error('Ocurrió un error inesperado:', error);
-      }
-    }    
+    } catch (error) {
+      console.error('Error al enviar la encuesta:', error instanceof Error ? error.message : error);
+    }
   }
-}
+  
+}  
