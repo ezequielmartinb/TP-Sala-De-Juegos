@@ -1,0 +1,20 @@
+.juegos {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas más pequeñas */
+    justify-content: center; /* Centra los elementos */
+    gap: 20px; /* Espacio entre los botones */
+    margin-top: 0%;
+  }
+  
+  .juegos div 
+  {
+    display: flex;
+    flex-direction: column; /* Asegura que imagen + texto se alineen correctamente */
+    align-items: center;
+  }
+  .h1 
+  {
+    margin-bottom: 10px; /* Reduce el espacio debajo del título */
+  }
+  
+  

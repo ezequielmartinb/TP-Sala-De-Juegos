@@ -47,10 +47,9 @@ export class RegistroComponent {
       });
   
       if (error) 
-      {
-        this.errorMessage = this.getErrorMessage(error.message);
-        return;
-      }  
+      {        
+        this.errorMessage = this.getErrorMessage(error.message);        
+      }
       this.saveUserData(this.username, this.password);
     } 
     catch (error) 
