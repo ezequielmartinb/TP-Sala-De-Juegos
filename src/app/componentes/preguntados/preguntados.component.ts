@@ -72,9 +72,10 @@ export class PreguntadosComponent {
 
     this.opciones = Array.from(opciones).sort(() => Math.random() - 0.5);
     this.respuestaSeleccionada = false;
-
+    console.log(this.paisSeleccionado.name);    
     this.iniciarTemporizador();
   }
+  
 
   iniciarTemporizador() 
   {
@@ -87,7 +88,7 @@ export class PreguntadosComponent {
       } 
       else 
       {
-        this.seleccionarPrimeraOpcion();
+        this.seleccionarOpcionErronea();
       }
     }, 1000);
   }
@@ -102,10 +103,12 @@ export class PreguntadosComponent {
     if (opcion.name === this.paisSeleccionado.name) 
     {
       this.puntuacion += 5;
+      this.continuarJuego();
     } 
     else 
     {
       this.intentosRestantes--;
+      this.continuarJuego();
       if(this.intentosRestantes === 0)
       {
         this.estadisticasService.guardarEstadistica(this.puntuacion, "Preguntados");
@@ -116,12 +119,16 @@ export class PreguntadosComponent {
     document.querySelectorAll('button.opcion').forEach(btn => btn.setAttribute('disabled', 'true'));
   }
 
-  seleccionarPrimeraOpcion() 
+  seleccionarOpcionErronea() 
   {
     clearInterval(this.intervalo);
-    const primeraOpcion = this.opciones[0];
-    this.verificarRespuesta(primeraOpcion, document.querySelector(`button.opcion`)!);
+    const opcionErronea = this.opciones.find(opcion => opcion.name !== this.paisSeleccionado.name);
+    if (opcionErronea) 
+    {
+      this.verificarRespuesta(opcionErronea, document.querySelector(`button.opcion`)!);
+    }
   }
+
   reiniciarJuego() 
   {
     this.puntuacion = 0;

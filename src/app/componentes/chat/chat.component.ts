@@ -56,7 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy
     {
       emisor: this.username,
       texto: this.nuevoMensaje,
-      fecha: new Date()
+      fecha: new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" })
     };
 
     const { error } = await supabase.from('mensajes').insert([mensaje]);

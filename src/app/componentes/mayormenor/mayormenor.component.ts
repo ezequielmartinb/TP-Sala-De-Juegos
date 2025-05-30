@@ -103,7 +103,7 @@ export class MayormenorComponent
     {
       this.resultado = '🤝 ¡Empate! Las cartas tienen el mismo valor.';
     } 
-    else if ((elección === 'mayor' && valorVisible > valorTapada) || (elección === 'menor' && valorVisible < valorTapada)) 
+    else if ((elección === 'mayor' && valorTapada > valorVisible) || (elección === 'menor' && valorTapada < valorVisible)) 
     {
       this.resultado = '✅ ¡Correcto!';
       this.puntos += 2;

@@ -2,13 +2,13 @@
 <div class="contenedor-pregunta" *ngIf="paisSeleccionado">
     <img [src]="paisSeleccionado.flag" [alt]="paisSeleccionado.name">
     <p class="timer">Tiempo restante: <strong>{{ tiempoRestante }}s</strong></p>
+    <p class="puntuacion">Puntuación acumulada: <strong>{{ puntuacion }}</strong></p>
     <div *ngFor="let opcion of opciones">
         <button class="opcion" #boton (click)="verificarRespuesta(opcion, boton)">
             {{ opcion.name }}
         </button>
     </div>
     <p><strong>Intentos restantes:</strong> {{ intentosRestantes }}</p>
-    <button *ngIf="respuestaSeleccionada && intentosRestantes > 0" (click)="continuarJuego()">▶️ Continuar</button>
     <button *ngIf="intentosRestantes === 0" (click)="reiniciarJuego()">🔄 Reiniciar</button>
 </div>
 <div *ngIf="intentosRestantes === 0" class="resultado-final">
