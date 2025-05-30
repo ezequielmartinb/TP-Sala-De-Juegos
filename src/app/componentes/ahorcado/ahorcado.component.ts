@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { PalabrasSecretasService } from '../../servicios/palabras-secretas.service';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { EstadisticasService } from '../../servicios/estadisticas.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { EstadisticasService } from '../../servicios/estadisticas.service';
   templateUrl: './ahorcado.component.html',
   styleUrls: ['./ahorcado.component.css']
 })
-export class AhorcadoComponent implements AfterViewInit 
+export class AhorcadoComponent implements AfterViewInit, OnInit 
 {
   @ViewChild('hangmanCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   ctx!: CanvasRenderingContext2D;
@@ -18,7 +17,20 @@ export class AhorcadoComponent implements AfterViewInit
   fila2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
   fila3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];  
 
-  palabrasSecretas: string[] = [];
+  palabrasSecretas: string[] = [
+    "RELAMPAGO", "SUSURRO", "ESPEJISMO", "RELOJ", "LABERINTO",
+    "HORIZONTE", "CRISTAL", "MELODIA", "TORMENTA", "ECLIPSE",
+    "REFLEJO", "DESTELLO", "RUIDO", "INFINITO", "SOMBRA",
+    "OLVIDO", "RAIZ", "ABISMO", "FANTASIA", "CENIZA",
+    "VIENTO", "DESVELO", "RELATO", "ESTRATEGIA", "SILENCIO",
+    "ENCANTO", "EFIMERO", "NOSTALGIA", "MISTERIO", "AURORA",
+    "RASTRO", "UMBRAL", "DISTANCIA", "FRAGANCIA", "SUSPIRO",
+    "MURMULLO", "VERSO", "CIELO", "IMPETU", "QUIMERA",
+    "CLARIDAD", "ALBOR", "ECO", "EUFORIA", "LATIDO",
+    "ESENCIA", "FUGAZ", "ANHELO", "CREPUSCULO", "ETER"
+  
+  ];
+  
   palabraIngresada: string = "";
   palabraOculta: string = "";
   letras: string[] = [];
@@ -29,35 +41,23 @@ export class AhorcadoComponent implements AfterViewInit
   mensajeFinal:string = "";
   intentos : number = 3;
   puntuacion : number = 0;
+  palabrasJugadas: string[] = [];
+  finDelJuego:boolean = false;
 
-  constructor(private palabrasService: PalabrasSecretasService, private estadisticasService: EstadisticasService) {}
+  constructor(private estadisticasService: EstadisticasService) {}
 
   ngOnInit() 
   {
-    this.cargandoPalabra = true; 
-    this.palabrasService.getPalabrasSecretas().subscribe(
+    if (this.palabrasSecretas.length > 0) 
     {
-      next: (data) => 
-      {        
-        this.palabrasSecretas = data.filter(palabra => /^[a-zA-Z]+$/.test(palabra.toString())) // Filtra palabras que solo contienen letras
-        .map(palabra => palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase()); // Elimina acentos y convierte a mayúsculas
-  
-        if (this.palabrasSecretas.length > 0) 
-        {
-          this.iniciarJuego();
-        } 
-        else 
-        {
-          console.error("Error: No se recibieron palabras válidas.");
-        }
-  
-        this.cargandoPalabra = false; 
-      },
-      error: (err) => {
-        console.error("Error al obtener palabras:", err);
-        this.cargandoPalabra = false;
-      }
-    });
+      this.cargandoPalabra = false;
+      this.palabrasSecretas
+      this.iniciarJuego();
+    }
+    else 
+    {
+      console.error("Error: No se recibieron palabras válidas.");
+    }   
   }
   
   ngAfterViewInit() 
@@ -67,22 +67,34 @@ export class AhorcadoComponent implements AfterViewInit
 
   iniciarJuego() 
   {
-    if (this.palabrasSecretas.length === 0) 
+    if (this.palabrasSecretas.length === 0)
     {
       console.error("No hay palabras disponibles para jugar.");
       return;
-    }   
-     
-    this.palabraIngresada = this.palabrasSecretas[Math.trunc(Math.random() * this.palabrasSecretas.length)];  
+    }
+  
+    const palabrasDisponibles = this.palabrasSecretas.filter(
+      palabra => !this.palabrasJugadas.includes(palabra)
+    );
+  
+    if (palabrasDisponibles.length === 0) 
+    {
+      this.finDelJuego = true;
+      this.estadisticasService.guardarEstadistica( this.puntuacion, 'Ahorcado');
+      return;
+    }
+  
+    this.palabraIngresada = palabrasDisponibles[Math.trunc(Math.random() * palabrasDisponibles.length)];
     this.palabraOculta = '_ '.repeat(this.palabraIngresada.length).trim();
     this.letras = [];
     this.errores = 0;
     this.juegoActivo = true;
-  
     console.log("Palabra seleccionada:", this.palabraIngresada);
     this.mensajeFinal = "";  
+    this.palabrasJugadas.push(this.palabraIngresada);        
     this.limpiarAhorcado();
   }
+  
   mostrarLetraElegida(letter: string) 
   {
 
@@ -131,7 +143,7 @@ export class AhorcadoComponent implements AfterViewInit
       if (this.intentos === 0) 
       {
         this.juegoActivo = false;
-        this.mensajeFinal = `Perdiste todos tus intentos! La última palabra era: ${this.palabraIngresada}`;
+        this.mensajeFinal = `¡Perdiste todos tus intentos! La última palabra era: ${this.palabraIngresada}`;
       } 
       else 
       {
@@ -169,6 +181,8 @@ export class AhorcadoComponent implements AfterViewInit
   {
     this.intentos = 3;
     this.puntuacion = 0;
+    this.finDelJuego = false;
+    this.palabrasJugadas = []; // Reiniciar palabras usadas
     this.juegoActivo = true;
     this.iniciarJuego();
   }  

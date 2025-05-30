@@ -26,8 +26,11 @@
         <h3>Letras usadas:</h3>
         <p>{{ letras.join(', ') }}</p>
     </div>
-    <button (click)="iniciarJuego()" class="reset-btn" [disabled]="cargandoPalabra || intentos === 0 || juegoActivo">
+    <h2 *ngIf="finDelJuego" class="mensaje-final">
+        Se acabaron las palabras. Tu puntaje es: {{ puntuacion }}
+    </h2>      
+    <button (click)="iniciarJuego()" class="reset-btn" [disabled]="cargandoPalabra || intentos === 0 || juegoActivo || finDelJuego">
         Siguiente palabra
     </button>
-    <button (click)="reiniciarJuego()" class="reset-btn" *ngIf="intentos === 0">🔄 Reiniciar Juego</button>
+    <button (click)="reiniciarJuego()" class="reset-btn" *ngIf="intentos === 0 || finDelJuego">🔄 Reiniciar Juego</button>
 </div>
