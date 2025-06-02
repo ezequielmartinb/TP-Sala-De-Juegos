@@ -1,111 +1,140 @@
 <h1>Encuesta</h1>
-<!-- Mensaje de agradecimiento -->
 <div *ngIf="mensajeGracias" class="alert alert-success text-center mt-3">
   ✅ Gracias por completar la encuesta
 </div>
 
 <form *ngIf="mostrarFormulario" [formGroup]="formularioEncuesta" (ngSubmit)="enviarFormulario()" class="container p-4 shadow-lg rounded bg-light">
 
-<form [formGroup]="formularioEncuesta" (ngSubmit)="enviarFormulario()">
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" type="text" formControlName="nombre" />
-      <div *ngIf="Nombre?.invalid">
-        <small *ngIf="Nombre?.errors?.['required']">⚠ Este campo es obligatorio.</small>
-        <small *ngIf="Nombre?.errors?.['pattern']">Solo se permiten letras.</small>
-      </div>
-    </div>
-  
-    <div>
-      <label for="apellido">Apellido:</label>
-      <input id="apellido" type="text" formControlName="apellido" />
-      <div *ngIf="Apellido?.invalid">
-        <small *ngIf="Apellido?.errors?.['required']">⚠ Este campo es obligatorio.</small>
-        <small *ngIf="Apellido?.errors?.['pattern']">Solo se permiten letras.</small>
-      </div>
-    </div>
-  
-    <div>
-      <label for="edad">Edad:</label>
-      <input id="edad" type="number" formControlName="edad" />
-      <div *ngIf="Edad?.invalid">
-        <small *ngIf="Edad?.errors?.['required']">⚠ Este campo es obligatorio.</small>
-        <small *ngIf="Edad?.errors?.['min']">Debe ser mayor de 18 años.</small>
-        <small *ngIf="Edad?.errors?.['max']">Debe ser menor de 99 años.</small>
-      </div>
-    </div>
-  
-    <div>
-      <label for="telefono">Teléfono:</label>
-      <input id="telefono" type="text" formControlName="telefono" maxlength="10" />
-      <div *ngIf="Telefono?.invalid">
-        <small *ngIf="Telefono?.errors?.['required']">⚠ Este campo es obligatorio.</small>
-        <small *ngIf="Telefono?.errors?.['pattern']">Solo se permiten números.</small>
-        <small *ngIf="Telefono?.errors?.['maxlength']">Máximo 10 caracteres.</small>
-        <small *ngIf="Telefono?.errors?.['minlength']">Minimo 10 caracteres.</small>
-      </div>
-    </div>
-    <div>
-        <label>1 - ¿Cuál juego te ha divertido más?</label><br><br>  
-        <div class="radio-group">
-          <label for="ahorcado">Ahorcado
-            <input type="radio" id="ahorcado" formControlName="juegoFavorito" value="Ahorcado" />
-          </label>
-          <label for="mayorMenor">Mayor-Menor
-            <input type="radio" id="mayorMenor" formControlName="juegoFavorito" value="Mayor-Menor" />
-          </label>
-          <label for="preguntados">Preguntados
-            <input type="radio" id="preguntados" formControlName="juegoFavorito" value="Preguntados" />
-          </label>
-          <label for="blackjack">Blackjack  
-            <input type="radio" id="blackjack" formControlName="juegoFavorito" value="Blackjack" />
-          </label><br>      
-        </div>      
-        <div *ngIf="formularioEncuesta.get('juegoFavorito')?.invalid">
-          <small>Debes seleccionar una opción.</small>
-        </div><br>
-    </div>  
-    <div>
-        <label>2 - ¿Qué características agregarías para hacer los juegos más entretenidos o desafiantes?</label><br><br>
-        <div class="checkbox-group">
-            <div class="checkbox-item">
-              <label for="niveles">Más niveles de dificultad  
-                <input type="checkbox" id="niveles" (change)="agregarOEliminarCaracteristica('Más niveles de dificultad', $event)" />
-              </label>
-            </div>          
-            <div class="checkbox-item">
-              <label for="modos">Nuevos modos de juego
-                <input type="checkbox" id="modos" (change)="agregarOEliminarCaracteristica('Nuevos modos de juego', $event)" />
-              </label>
-            </div>          
-            <div class="checkbox-item">
-              <label for="integracion">Integración online con amigos  
-                <input type="checkbox" id="integracion" (change)="agregarOEliminarCaracteristica('Integración con amigos', $event)" />
-              </label><br><br>
-            </div>          
+<form [formGroup]="formularioEncuesta" (ngSubmit)="enviarFormulario()">    
+    <fieldset class="border p-3">
+      <legend>Datos personales</legend>
+      <div class="row g-3"> 
+        <div class="col-md-6">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" type="text" formControlName="nombre" class="form-control" />
+          <div *ngIf="Nombre?.invalid">
+            <small *ngIf="Nombre?.errors?.['required']">⚠ Este campo es obligatorio.</small>
+            <small *ngIf="Nombre?.errors?.['pattern']">Solo se permiten letras.</small>
+          </div>
         </div>
-        <div *ngIf="Caracteristicas?.invalid">
-            <small>Debes seleccionar al menos una opción.</small> <br>
-        </div>
-    </div>
-    <div>
-      <label for="comentario">3 - Comparte tu experiencia con la aplicación:</label><br>
-      <textarea id="comentario" formControlName="comentario" rows="3" (input)="actualizarContador()" class="form-control"></textarea>      
-      
-      <!-- Contador de caracteres -->
-      <div class="text-muted">
-        Caracteres ingresados: {{ contadorCaracteres }}/180
-      </div>
     
-      <!-- Mensajes de error -->
-      <div *ngIf="Comentario?.invalid && Comentario?.touched" class="text-danger">
-        <small *ngIf="Comentario?.errors?.['required']">⚠ Este campo es obligatorio.</small>
-        <small *ngIf="Comentario?.errors?.['maxlength']">⚠ El comentario no puede superar los 180 caracteres.</small>
+        <div class="col-md-6">
+          <label for="apellido">Apellido:</label>
+          <input id="apellido" type="text" formControlName="apellido" class="form-control" />
+          <div *ngIf="Apellido?.invalid">
+            <small *ngIf="Apellido?.errors?.['required']">⚠ Este campo es obligatorio.</small>
+            <small *ngIf="Apellido?.errors?.['pattern']">Solo se permiten letras.</small>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <label for="edad">Edad:</label>
+          <input id="edad" type="number" formControlName="edad" class="form-control" />
+          <div *ngIf="Edad?.invalid">
+            <small *ngIf="Edad?.errors?.['required']">⚠ Este campo es obligatorio.</small>
+            <small *ngIf="Edad?.errors?.['min']">Debe ser mayor de 18 años.</small>
+            <small *ngIf="Edad?.errors?.['max']">Debe ser menor de 99 años.</small>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <label for="telefono">Teléfono:</label>
+          <input id="telefono" type="text" formControlName="telefono" class="form-control" maxlength="10" />
+          <div *ngIf="Telefono?.invalid">
+            <small *ngIf="Telefono?.errors?.['required']">⚠ Este campo es obligatorio.</small>
+            <small *ngIf="Telefono?.errors?.['pattern']">Solo se permiten números.</small>
+            <small *ngIf="Telefono?.errors?.['maxlength']">Máximo 10 caracteres.</small>
+            <small *ngIf="Telefono?.errors?.['minlength']">Mínimo 10 caracteres.</small>
+          </div>
+        </div>
+    
       </div>
-    </div>  
-    <div *ngIf="mostrarError" class="alert alert-danger text-center">
-      ⚠️ Ya has enviado una encuesta anteriormente.
-    </div>    
+    </fieldset> <br>
+    <fieldset class="border p-3">
+      <legend>1 - ¿Cuál juego te ha divertido más?</legend>
+      <div class="row g-3">  
+    
+        <div class="col-md-6">
+          <div class="form-check">
+            <input type="radio" id="ahorcado" name="juego" value="ahorcado" class="form-check-input" formControlName="juegoFavorito">
+            <label for="ahorcado" class="form-check-label">Ahorcado</label>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="form-check">
+            <input type="radio" id="mayor-menor" name="juego" value="mayor-menor" class="form-check-input" formControlName="juegoFavorito">
+            <label for="mayor-menor" class="form-check-label">Mayor-menor</label>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="form-check">
+            <input type="radio" id="preguntados" name="juego" value="preguntados" class="form-check-input" formControlName="juegoFavorito">
+            <label for="preguntados" class="form-check-label">Preguntados</label>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="form-check">
+            <input type="radio" id="blackjack" name="juego" value="blackjack" class="form-check-input" formControlName="juegoFavorito">
+            <label for="blackjack" class="form-check-label">Blackjack</label>
+          </div>
+        </div>
+    
+      </div>
+      <div *ngIf="formularioEncuesta.get('juegoFavorito')?.invalid">
+        <small class="text-danger">Debes seleccionar una opción.</small>
+      </div>         
+    </fieldset><br>
+
+    <fieldset class="border p-3">
+      <legend>2 - ¿Qué características agregarías para hacer los juegos más entretenidos o desafiantes?</legend>
+      <div class="row g-3">  
+
+        <div class="col-md-6">
+          <input type="checkbox" id="niveles" class="form-check-input" 
+                (change)="agregarOEliminarCaracteristica('Más niveles de dificultad', $event)">
+          <label for="niveles" class="form-check-label">Más niveles de dificultad</label>
+        </div>
+
+        <div class="col-md-6">
+          <input type="checkbox" id="modos" class="form-check-input" 
+                (change)="agregarOEliminarCaracteristica('Nuevos modos de juego', $event)">
+          <label for="modos" class="form-check-label">Nuevos modos de juego</label>
+        </div>
+
+        <div class="col-md-6">
+          <input type="checkbox" id="integracion" class="form-check-input" 
+                (change)="agregarOEliminarCaracteristica('Integración con amigos', $event)">
+          <label for="integracion" class="form-check-label">Integración online con amigos</label>
+        </div>
+
+      </div>
+      <div *ngIf="Caracteristicas?.invalid">
+        <small class="text-danger">Debes seleccionar al menos una opción.</small>
+      </div>
+    </fieldset> <br>
+
+    <fieldset class="border p-3">
+      <legend>3 - Comparte tu experiencia con la aplicación</legend>
+      <div class="row g-3">
+        <div class="col-md-12">
+          <label for="comentario" class="form-label">Tu comentario:</label>
+          <textarea id="comentario" formControlName="comentario" rows="3" (input)="actualizarContador()" class="form-control"></textarea>            
+          <div class="text-muted">
+            Caracteres ingresados: {{ contadorCaracteres }}/180
+          </div>
+          <div *ngIf="Comentario?.invalid && Comentario?.touched" class="text-danger">
+            <small *ngIf="Comentario?.errors?.['required']">⚠ Este campo es obligatorio.</small>
+            <small *ngIf="Comentario?.errors?.['maxlength']">⚠ El comentario no puede superar los 180 caracteres.</small>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="mostrarError" class="alert alert-danger text-center">
+        ⚠️ Ya has enviado una encuesta anteriormente.
+      </div>
+    </fieldset><br>
     <button type="submit" [disabled]="formularioEncuesta.invalid">Enviar</button>
   </form>
 </form>

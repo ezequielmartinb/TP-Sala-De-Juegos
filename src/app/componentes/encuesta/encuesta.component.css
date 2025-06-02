@@ -2,7 +2,7 @@ body {
     color: black !important;
   }
   
-  label, input, textarea{
+  label, input, textarea, legend{
     color: black !important;
   }
   
@@ -91,3 +91,11 @@ button:hover
     color: red;
     font-size: 0.85rem;
   }
+  .form-check-input:checked {
+    background-color: #007bff; /* Cambia el color del botón seleccionado */
+    border-color: #007bff;    
+  }
+  .form-check-input {
+    margin-right: 8px; /* Agrega separación antes del texto */
+  }
+  
