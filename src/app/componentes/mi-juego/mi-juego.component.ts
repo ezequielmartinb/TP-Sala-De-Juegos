@@ -2,13 +2,9 @@ import { Component } from '@angular/core';
 import { CartasService } from '../../servicios/cartas.service';
 import { CommonModule } from '@angular/common';
 import { EstadisticasService } from '../../servicios/estadisticas.service';
-interface Carta
-{
-  code:string;
-  image:string;
-  suit:string;
-  value:string
-}
+import { Carta } from '../../modelos/interface';
+
+
 @Component({
   selector: 'app-mi-juego',
   imports: [CommonModule],
@@ -25,7 +21,7 @@ export class MiJuegoComponent
   juegoTerminado = false;
   mensajeResultado = '';
   intentosRestantes = 3;
-  puntajeTotal = 0;
+  puntuacion = 0;
 
   constructor(private cartasService: CartasService, private estadisticasService: EstadisticasService) {}
 
@@ -39,7 +35,7 @@ export class MiJuegoComponent
     if (this.intentosRestantes <= 0) 
     {
       this.intentosRestantes = 3;
-      this.puntajeTotal = 0;      
+      this.puntuacion = 0;      
     }
 
     this.juegoTerminado = false;
@@ -127,7 +123,7 @@ export class MiJuegoComponent
     if (this.puntajeBanca > 21 || this.puntajeJugador > this.puntajeBanca) 
     {
       this.mensajeResultado = '¡Ganaste!';
-      this.puntajeTotal += 100;
+      this.puntuacion += this.puntajeJugador * 10;
     } 
     else if (this.puntajeBanca === this.puntajeJugador) 
     {
@@ -139,7 +135,7 @@ export class MiJuegoComponent
       this.intentosRestantes--;
       if(this.intentosRestantes === 0)
       {
-        this.estadisticasService.guardarEstadistica(this.puntajeTotal, "Blackjack");
+        this.estadisticasService.guardarEstadistica(this.puntuacion, "Blackjack");
       }
     }   
   }

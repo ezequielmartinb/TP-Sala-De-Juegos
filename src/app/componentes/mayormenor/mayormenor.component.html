@@ -14,10 +14,10 @@
     <p>{{ resultado }}</p>
     <p><strong>Intentos restantes:</strong> {{ intentosRestantes }}</p>
     <div *ngIf="intentosRestantes > 0" class="mensaje-final">
-        <p><strong>Puntuación:</strong> {{ puntos }}</p> 
+        <p><strong>Puntuación:</strong> {{ puntuacion }}</p> 
     </div>    
     <div *ngIf="intentosRestantes <= 0" class="mensaje-final">
         <h3>🎯 ¡Juego terminado!</h3>
-        <p><strong>Puntuación final:</strong> {{ puntos }}</p> 
+        <p><strong>Puntuación final:</strong> {{ puntuacion }}</p> 
     </div>
 </div>

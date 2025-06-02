@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 import { PaisesService } from '../../servicios/paises.service';
 import { CommonModule } from '@angular/common';
 import { EstadisticasService } from '../../servicios/estadisticas.service';
-interface Pais
-{
-  name:string,
-  flag:string
-}
+import { Pais } from '../../modelos/interface';
+
 @Component({
   selector: 'app-preguntados',
   imports: [CommonModule],

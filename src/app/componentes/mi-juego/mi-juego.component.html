@@ -3,7 +3,7 @@
   
     <!-- Mostrar intentos y puntuación -->
     <p>Intentos restantes: <strong>{{ intentosRestantes }}</strong></p>
-    <p>Puntaje acumulado: <strong>{{ puntajeTotal }}</strong></p>
+    <p>Puntaje acumulado: <strong>{{ puntuacion }}</strong></p>
   
     <div class="cartas-container">
       <h2>Jugador</h2>
@@ -26,7 +26,7 @@
   
     <div *ngIf="juegoTerminado">
         <h2>{{ mensajeResultado }}</h2>
-        <h2 *ngIf="intentosRestantes == 0">🎯¡Juego terminado! Puntaje final: {{ puntajeTotal }}</h2>
+        <h2 *ngIf="intentosRestantes == 0">🎯¡Juego terminado! Puntaje final: {{ puntuacion }}</h2>
         <button (click)="iniciarJuego()">
           {{ intentosRestantes > 0 ? 'Siguiente mano' : 'Reiniciar Juego' }}
         </button>

@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartasService } from '../../servicios/cartas.service';
 import { CommonModule } from '@angular/common';
 import { EstadisticasService } from '../../servicios/estadisticas.service';
-interface Carta
-{
-  code:string;
-  image:string;
-  suit:string;
-  value:string
-}
+import { Carta } from '../../modelos/interface';
+
 @Component({
   selector: 'app-mayormenor',
   imports: [CommonModule],
@@ -26,7 +21,7 @@ export class MayormenorComponent
   cargandoCartas: boolean = false;
   mensajeCarga: string = '';
   intentosRestantes: number = 3; 
-  puntos: number = 0;
+  puntuacion: number = 0;
   mostrarBotonContinuar: boolean = false;
 
   constructor(private cartasService: CartasService, private estadisticasService: EstadisticasService) {}
@@ -106,7 +101,7 @@ export class MayormenorComponent
     else if ((elección === 'mayor' && valorTapada > valorVisible) || (elección === 'menor' && valorTapada < valorVisible)) 
     {
       this.resultado = '✅ ¡Correcto!';
-      this.puntos += 2;
+      this.puntuacion += 2;
     } 
     else 
     {
@@ -114,7 +109,7 @@ export class MayormenorComponent
       this.intentosRestantes--;
       if(this.intentosRestantes === 0)
       {
-        this.estadisticasService.guardarEstadistica(this.puntos, "Mayor-Menor");
+        this.estadisticasService.guardarEstadistica(this.puntuacion, "Mayor-Menor");
       }
     }
 
@@ -130,7 +125,7 @@ export class MayormenorComponent
 
   finalizarJuego() 
   {
-    console.log(`🎯 ¡Juego terminado! Puntuación final: ${this.puntos}`);
+    console.log(`🎯 ¡Juego terminado! Puntuación final: ${this.puntuacion}`);
     this.intentosRestantes = 0;
     this.mostrarBotonContinuar = false;
   }
@@ -143,7 +138,7 @@ export class MayormenorComponent
   reiniciarJuego() 
   {
     this.intentosRestantes = 3;
-    this.puntos = 0;
+    this.puntuacion = 0;
     this.cartas = [];
     this.mostrarBotonContinuar = false;
     this.resultado = '';
